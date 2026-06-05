@@ -1,0 +1,29 @@
+body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #f1f5f9;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.hero { padding: 80px 20px; }
+
+.cta-buttons { margin-top: 30px; display: flex; justify-content: center; gap: 20px; }
+.btn { padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: 0.3s; }
+.hire { background-color: #38bdf8; color: #000; }
+.website { background-color: #ffffff; color: #000; }
+.btn:hover { transform: scale(1.05); opacity: 0.9; }
+
+.card {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(10px);
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 40px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.email-link { color: #38bdf8; text-decoration: none; font-weight: bold; }
+.email-link:hover { color: #ffffff; text-decoration: underline; }
