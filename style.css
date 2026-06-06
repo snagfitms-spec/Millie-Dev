@@ -1,38 +1,131 @@
-/* --- Global Styles --- */
+:root {
+    --bg: #0b1220;
+    --text: #e5e7eb;
+    --card: #111827;
+    --primary: #3b82f6;
+    --accent: #a855f7;
+    --border: #1f2937;
+}
+
+.light {
+    --bg: #f8fafc;
+    --text: #0f172a;
+    --card: #e2e8f0;
+    --border: #cbd5e1;
+}
+
 body {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('1780706873437.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    color: #ffffff;
-    font-family: sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
     margin: 0;
-    padding: 20px;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: 0.3s;
+}
+
+/* NAV SYSTEM */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 40px;
+    position: sticky;
+    top: 0;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+}
+
+.brand {
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.nav-items a {
+    margin-right: 15px;
+    text-decoration: none;
+    color: var(--text);
+}
+
+/* HERO SYSTEM */
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
     text-align: center;
 }
 
-/* --- Branding & Colors --- */
-h1 { color: #8a2be2; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); } /* Royal Purple for MILLIE.DAV */
-h2 { color: #38bdf8; margin-bottom: 10px; } /* Sky Blue for 'About' header */
+.hero h1 {
+    font-size: 48px;
+    color: var(--accent);
+}
 
-.dot { height: 10px; width: 10px; background-color: #22c55e; border-radius: 50%; display: inline-block; margin-right: 5px; }
+.actions {
+    margin-top: 20px;
+}
 
-/* --- Button Styling --- */
-.button-container { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 350px; }
+.btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+}
 
-.action-btn { padding: 15px; border-radius: 8px; font-weight: bold; text-decoration: none; transition: 0.3s; text-align: center; border: 2px solid #fff; }
+.primary {
+    background: var(--primary);
+    color: white;
+}
 
-.hire-btn { background-color: #38bdf8; color: #000; border-color: #38bdf8; } /* Sky Blue */
-.website-btn { background-color: transparent; color: #fff; border-color: #ffffff; } /* White */
+.outline {
+    border: 1px solid var(--primary);
+    color: var(--text);
+}
 
-.action-btn:hover { opacity: 0.9; transform: scale(1.02); }
+/* SECTIONS */
+.section {
+    padding: 80px 20px;
+    max-width: 1000px;
+    margin: auto;
+}
 
+/* GRID SYSTEM */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
 
+/* CARDS */
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
 
+.card img {
+    width: 100%;
+}
 
+/* CONTACT SYSTEM */
+.contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
 
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input, textarea {
+    padding: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+}
