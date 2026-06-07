@@ -39,6 +39,17 @@ app.post("/bookings", async (req, res) => {
   }
 });
 
+// GET route to view all bookings
+app.get("/bookings", async (req, res) => {
+  try {
+    const allBookings = await Booking.find();
+    res.status(200).json(allBookings);
+  } catch (err) {
+    res.status(500).send("Error fetching bookings: " + err.message);
+  }
+});
+
+
 
 /* =========================
    START SERVER
