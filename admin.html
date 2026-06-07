@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #070A12;
+  color: white;
+  padding: 20px;
+}
+
+h1 {
+  color: #6C63FF;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #222;
+  text-align: left;
+}
+
+button {
+  padding: 6px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-right: 5px;
+}
+
+.delete {
+  background: red;
+  color: white;
+}
+
+.refresh {
+  background: #6C63FF;
+  color: white;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Admin Dashboard</h1>
+
+<button class="refresh" onclick="loadBookings()">Refresh</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Service</th>
+      <th>Message</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody id="data"></tbody>
+</table>
+
+<script>
+
+const API = "https://millie-dav.onrender.com/bookings";
+
+// LOAD BOOKINGS
+async function loadBookings() {
+  const res = await fetch(API);
+  const data = await res.json();
+
+  const table = document.getElementById("data");
+  table.innerHTML = "";
+
+  data.forEach(item => {
+    table.innerHTML += `
+      <tr>
+        <td>${item.name}</td>
+        <td>${item.email}</td>
+        <td>${item.service}</td>
+        <td>${item.message}</td>
+        <td>${item.status || "pending"}</td>
+        <td>
+          <button class="delete" onclick="deleteBooking('${item._id}')">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+// DELETE BOOKING
+async function deleteBooking(id) {
+  await fetch(`${API}/${id}`, {
+    method: "DELETE"
+  });
+
+  loadBookings();
+}
+
+// AUTO LOAD
+loadBookings();
+
+</script>
+
+</body>
+</html>
