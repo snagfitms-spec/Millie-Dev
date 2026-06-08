@@ -65,3 +65,47 @@ app.patch("/bookings/:id", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+
+app.post("/admin/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  if (username !== "admin") {
+    return res.status(401).json({ message: "Wrong username" });
+  }
+
+  const validPassword = bcrypt.compareSync(password, bcrypt.hashSync("1234", 10));
+
+  if (!validPassword) {
+    return res.status(401).json({ message: "Wrong password" });
+  }
+
+  const token = jwt.sign(
+    { user: "admin" },
+    "SECRET_KEY_123",
+    { expiresIn: "1h" }
+  );
+
+  res.json({ token });
+});
+function authMiddleware(req, res, next) {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(403).json({ message: "No token" });
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  try {
+    jwt.verify(token, "SECRET_KEY_123");
+    next();
+  } catch (err) {
+    return res.status(403).json({ message: "Invalid token" });
+  }
+}
+
+app.get("/bookings", authMiddleware, async (req, res) => {
+  // your existing database fetch code here
+});
