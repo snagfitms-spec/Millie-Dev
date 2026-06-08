@@ -1,9 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
+
 const app = express();
 
-app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
@@ -52,7 +51,6 @@ app.get("/bookings", async (req, res) => {
   }
 });
 
-
 /* =========================
    START SERVER
    ========================= */
@@ -87,9 +85,4 @@ app.patch("/bookings/:id", async (req, res) => {
     }
     res.status(200).json(updatedBooking);
   } catch (err) {
-    res.status(500).send("Error updating booking: " + err.message);
-  }
-});
-
-
-
+    res.status(500).send("Error updating booking: " 
