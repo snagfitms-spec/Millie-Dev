@@ -61,8 +61,28 @@ function login() {
   const user = document.getElementById("user").value;
   const pass = document.getElementById("pass").value;
 
-  // SIMPLE PROTECTION (we upgrade later)
-  if (user === "admin" && pass === "1234") {
+  async function login() {
+  const username = document.getElementById("user").value;
+  const password = document.getElementById("pass").value;
+
+  const res = await fetch("https://millie-dav.onrender.com/admin/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ username, password })
+  });
+
+  const data = await res.json();
+
+  if (data.token) {
+    localStorage.setItem("token", data.token);
+    window.location.href = "admin.html";
+  } else {
+    document.getElementById("msg").innerText = "Login failed";
+  }
+  }
+  
     localStorage.setItem("auth", "true");
     window.location.href = "admin.html";
   } else {
