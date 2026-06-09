@@ -1,4 +1,55 @@
-<!-- REPLACE YOUR EXISTING SCRIPT SECTION WITH THIS -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MillieDev | Digital Solutions</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav>
+    <h2>MillieDev</h2>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="courses.html">Courses</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="booking.html">Booking</a></li>
+    </ul>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-text">
+        <h1>I Build Websites That <span>Convert</span></h1>
+        <p>Modern, fast, and responsive digital solutions for your business.</p>
+    </div>
+
+    <div id="booking-section" class="form-container">
+        <h3>Book a Service</h3>
+        <input id="name" placeholder="Your Name">
+        <input id="email" placeholder="Your Email">
+        <textarea id="message" placeholder="Project details..."></textarea>
+        <button onclick="sendBooking()" id="btn">Submit Booking</button>
+        <p id="response"></p>
+    </div>
+</section>
+
+<section id="services" class="section">
+    <h2 style="text-align:center; margin-bottom:40px;">My Premium Services</h2>
+    <div class="grid">
+        <div class="card"><h3>Web Design</h3><p>Professional layouts.</p></div>
+        <div class="card"><h3>E-Commerce</h3><p>Sell online globally.</p></div>
+        <div class="card"><h3>Custom Apps</h3><p>Scale your brand.</p></div>
+    </div>
+</section>
+
+<footer style="text-align:center; padding:40px; opacity:0.6;">
+    © 2026 MillieDev Portfolio System
+</footer>
+
 <script>
 async function sendBooking() {
     const btn = document.getElementById("btn");
@@ -11,10 +62,9 @@ async function sendBooking() {
     };
 
     btn.innerText = "Sending...";
-    btn.disabled = true; // Added to prevent double-clicks
+    btn.disabled = true;
 
     try {
-        // FIXED: Changed from /bookings to /booking to match your API and file naming convention
         const res = await fetch("https://millie-dav.onrender.com/booking", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -28,7 +78,6 @@ async function sendBooking() {
             resBox.innerText = "Failed to send.";
             resBox.style.color = "red";
         }
-
     } catch (err) {
         resBox.innerText = "Error. Try again.";
         resBox.style.color = "red";
@@ -39,16 +88,5 @@ async function sendBooking() {
 }
 </script>
 
-<!-- NAVIGATION UPDATE -->
-<!-- Make sure your nav menu looks like this to include the link we fixed -->
-<nav>
-    <h2>MillieDev</h2>
-    <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="portfolio.html">Portfolio</a></li>
-        <li><a href="courses.html">Courses</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="booking.html">Booking</a></li>
-    </ul>
-</nav>
+</body>
+</html>
