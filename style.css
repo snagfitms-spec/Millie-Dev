@@ -235,3 +235,12 @@ button:hover {
         padding: 60px 20px;
     }
 }
+
+/* Keeps the cards looking like cards even when they are links */
+.feed-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+
