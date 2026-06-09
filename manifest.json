@@ -1,1 +1,23 @@
+{
+  "name": "MillieDev Professional Services",
+  "short_name": "MillieDev",
+  "description": "Official portal for digital content, courses, and professional services by Millie.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#070A12",
+  "theme_color": "#6C63FF",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
 
