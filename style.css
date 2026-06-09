@@ -1,3 +1,4 @@
+/* 1. Global Reset & Variables */
 :root {
     --bg: #0b1220;
     --text: #e5e7eb;
@@ -7,99 +8,94 @@
     --border: #1f2937;
 }
 
-/* Base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
-    margin: 0;
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text);
-    transition: 0.3s;
+    line-height: 1.6;
+    min-height: 100vh; /* Ensures page can always grow */
 }
 
-/* NAV SYSTEM - Integrated with your variables */
+/* 2. Navigation (Standardized) */
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 40px;
+    padding: 15px 5%;
+    background: rgba(11, 18, 32, 0.95);
     position: sticky;
     top: 0;
-    background: rgba(11, 18, 32, 0.95);
-    backdrop-filter: blur(10px);
     z-index: 1000;
+    border-bottom: 1px solid var(--border);
 }
 
-.brand { font-weight: 700; color: var(--accent); font-size: 1.5rem; }
-.nav-items { display: flex; gap: 20px; }
-.nav-items a { text-decoration: none; color: var(--text); font-size: 0.9rem; }
+nav ul { display: flex; list-style: none; gap: 15px; }
+nav a { text-decoration: none; color: var(--text); font-size: 0.85rem; font-weight: 500; }
 
-/* Booking Box Integration */
+/* 3. Hero Section (Prevents overlap) */
+.hero {
+    padding: 60px 5%;
+    text-align: center;
+}
+
+.hero h1 { font-size: 2.2rem; line-height: 1.1; margin-bottom: 15px; }
+
+/* 4. The "Box" Container (Fixed for Booking & Cards) */
+.container { 
+    width: 90%; 
+    max-width: 600px; 
+    margin: 20px auto; 
+    padding: 20px; 
+}
+
 .box { 
     background: var(--card); 
     padding: 25px; 
     border-radius: 12px; 
-    width: 90%; 
-    max-width: 400px; 
-    margin: 40px auto; 
     border: 1px solid var(--border);
 }
 
-/* Form Elements - Updated to match your high-end theme */
-input, select, textarea { 
+/* 5. Responsive Grid (For Portfolio & Services) */
+.grid { 
+    display: grid; 
+    grid-template-columns: 1fr; /* Stacked on mobile */
+    gap: 20px; 
+    padding: 20px 0;
+}
+
+.card { 
+    background: var(--card); 
+    padding: 20px; 
+    border-radius: 12px; 
+    border: 1px solid var(--border); 
+}
+
+/* 6. Form Elements */
+input, textarea { 
     width: 100%; 
     padding: 12px; 
-    margin-top: 10px; 
+    margin: 10px 0; 
     border: 1px solid var(--border);
     border-radius: 8px; 
     background: var(--bg); 
-    color: var(--text);
-    box-sizing: border-box; 
+    color: white; 
 }
 
 button { 
     width: 100%; 
-    margin-top: 15px; 
     padding: 12px; 
     background: var(--primary); 
     border: none; 
     color: white; 
-    cursor: pointer; 
     border-radius: 8px; 
     font-weight: bold; 
+    cursor: pointer; 
 }
 
-/* ... Keep all your existing HERO, GRID, CARDS, and MEDIA QUERIES below here ... */
-
-/* Add this inside your @media (max-width: 600px) block in style.css */
-
+/* 7. Mobile Optimization */
 @media (max-width: 600px) {
-    /* ... existing styles ... */
-
-    /* This shrinks the big headline on mobile */
-    .hero h1 {
-        font-size: 2.2rem; /* Much better than 48px fixed */
-        line-height: 1.1;  /* Keeps the lines tighter */
-        margin-top: 10px;
-    }
-
-    /* This adds space between the Nav and the Hero section */
-    .hero {
-        padding-top: 20px; 
-    }
+    nav { flex-direction: column; gap: 10px; }
+    .hero h1 { font-size: 1.8rem; }
 }
-/* Add this to style.css to make the portfolio cards look like a professional grid */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Automatically fits cards to screen */
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.card {
-    background: var(--card); /* Uses your defined theme color */
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-}
-
-
