@@ -3,204 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Pro Portfolio Booking System</title>
-
+<title>MillieDev | Digital Solutions</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg: #070A12;
-  --card: #11182a;
-  --primary: #6C63FF;
-  --text: #ffffff;
-  --muted: rgba(255,255,255,0.7);
-}
+:root { --bg: #070A12; --card: #11182a; --primary: #6C63FF; --text: #ffffff; --muted: rgba(255,255,255,0.7); }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: "Inter", sans-serif; }
+body { background: var(--bg); color: var(--text); }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Inter", sans-serif;
-}
+/* NAV - Improved Spacing */
+nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 100; }
+nav h2 { color: var(--primary); font-size: 1.5rem; }
+nav ul { display: flex; gap: 25px; list-style: none; }
+nav ul li { opacity: 0.8; cursor: pointer; font-size: 0.9rem; }
+nav ul li:hover { opacity: 1; color: var(--primary); }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-}
+/* HERO - Split Layout */
+.hero { display: flex; align-items: center; justify-content: space-between; padding: 80px 5%; gap: 50px; }
+.hero-text { max-width: 50%; }
+.hero-text h1 { font-size: 3.5rem; line-height: 1.1; }
+.hero-text span { color: var(--primary); }
+.hero-text p { margin: 20px 0; color: var(--muted); font-size: 1.1rem; }
 
-/* NAV */
-nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 60px;
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-}
+/* Desktop Form Container */
+.form-container { width: 400px; background: var(--card); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); }
 
-nav h2 {
-  color: var(--primary);
-}
+/* Buttons & Inputs */
+.btn { padding: 12px 25px; background: var(--primary); border: none; color: white; border-radius: 8px; cursor: pointer; font-weight: 600; }
+input, textarea { width: 100%; margin-top: 10px; padding: 12px; border-radius: 8px; border: none; background: #0b0f1a; color: white; }
+.form-container button { width: 100%; margin-top: 15px; padding: 14px; background: var(--primary); border: none; color: white; cursor: pointer; border-radius: 8px; }
 
-nav ul {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-}
-
-nav ul li {
-  opacity: 0.7;
-  cursor: pointer;
-}
-
-nav ul li:hover {
-  opacity: 1;
-  color: var(--primary);
-}
-
-/* HERO */
-.hero {
-  display: flex;
-  justify-content: space-between;
-  padding: 90px 60px;
-  gap: 40px;
-}
-
-.hero-text {
-  max-width: 55%;
-}
-
-.hero-text h1 {
-  font-size: 52px;
-}
-
-.hero-text span {
-  color: var(--primary);
-}
-
-.hero-text p {
-  margin-top: 15px;
-  color: var(--muted);
-}
-
-.btn {
-  margin-top: 20px;
-  padding: 12px 20px;
-  background: var(--primary);
-  border: none;
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-/* STATS */
-.stats {
-  display: flex;
-  justify-content: space-around;
-  padding: 50px;
-  background: rgba(255,255,255,0.03);
-}
-
-.stat h3 {
-  color: var(--primary);
-}
-
-/* SERVICES */
-.section {
-  padding: 60px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-}
-
-.card {
-  background: var(--card);
-  padding: 20px;
-  border-radius: 12px;
-}
-
-/* TESTIMONIALS */
-.testimonials {
-  padding: 60px;
-}
-
-.test-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.test {
-  background: var(--card);
-  padding: 20px;
-  border-radius: 12px;
-  color: var(--muted);
-}
-
-/* FORM */
-.form {
-  margin: 60px;
-  padding: 40px;
-  background: var(--card);
-  border-radius: 12px;
-}
-
-.form input,
-.form textarea {
-  width: 100%;
-  margin-top: 10px;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  background: #0b0f1a;
-  color: white;
-}
-
-.form button {
-  width: 100%;
-  margin-top: 15px;
-  padding: 14px;
-  background: var(--primary);
-  border: none;
-  color: white;
-  cursor: pointer;
-  border-radius: 10px;
-}
-
-/* RESPONSE */
-#response {
-  margin-top: 10px;
-  color: var(--muted);
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-  .hero {
-    flex-direction: column;
-    padding: 40px 20px;
-  }
-
-  nav {
-    padding: 15px 20px;
-  }
-
-  .stats {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-  }
-
-  .form {
-    margin: 20px;
-  }
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 900px) {
+  .hero { flex-direction: column; text-align: center; }
+  .hero-text { max-width: 100%; }
+  .form-container { width: 100%; }
 }
 </style>
-
 </head>
 
 <body>
@@ -215,101 +54,58 @@ nav ul li:hover {
   </ul>
 </nav>
 
-<div class="hero">
+<section class="hero">
   <div class="hero-text">
     <h1>I Build Websites That <span>Convert</span></h1>
     <p>High-performance digital systems designed to turn visitors into paying clients.</p>
-    <button class="btn">Book a Service</button>
+    <a href="#booking-section"><button class="btn">Book a Service</button></a>
   </div>
-</div>
 
-<div class="stats">
-  <div class="stat"><h3>50+</h3><p>Projects</p></div>
-  <div class="stat"><h3>100%</h3><p>Satisfaction</p></div>
-  <div class="stat"><h3>24h</h3><p>Response</p></div>
-</div>
-
-<div class="section">
-  <h2>Services</h2>
-  <div class="grid">
-    <div class="card">Website Design</div>
-    <div class="card">Web Applications</div>
-    <div class="card">Backend APIs</div>
+  <div id="booking-section" class="form-container">
+    <h3>Book a Service</h3>
+    <input id="name" placeholder="Your Name">
+    <input id="email" placeholder="Your Email">
+    <input id="service" placeholder="Service Needed">
+    <textarea id="message" placeholder="Project details..."></textarea>
+    <button onclick="sendBooking()" id="btn">Submit Booking</button>
+    <p id="response"></p>
   </div>
-</div>
-
-<div class="testimonials">
-  <h2>Testimonials</h2>
-  <div class="test-grid">
-    <div class="test">"Very professional work."</div>
-    <div class="test">"Fast delivery and clean design."</div>
-    <div class="test">"Highly recommend this developer."</div>
-  </div>
-</div>
-
-<div class="form">
-  <h2>Book a Service</h2>
-
-  <input id="name" placeholder="Name" required>
-  <input id="email" placeholder="Email" required>
-  <input id="service" placeholder="Service" required>
-  <textarea id="message" placeholder="Message" required></textarea>
-
-  <button onclick="sendBooking()" id="btn">Submit Booking</button>
-
-  <p id="response"></p>
-</div>
+</section>
 
 <footer style="text-align:center;padding:30px;opacity:0.5;">
-  © 2026 Pro Portfolio System
+  © 2026 Millie.Dav_Pro Portfolio System
 </footer>
 
 <script>
-
-const API = "https://millie-dav.onrender.com/bookings";
-
 async function sendBooking() {
-
   const btn = document.getElementById("btn");
   const resBox = document.getElementById("response");
-
   const data = {
     name: document.getElementById("name").value,
     email: document.getElementById("email").value,
     service: document.getElementById("service").value,
     message: document.getElementById("message").value
   };
-
-  // loading state
-  btn.innerText = "Sending...";
-  btn.disabled = true;
-
-  try {
-    const res = await fetch(API, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    });
-
-    if (!res.ok) throw new Error("Request failed");
-
-    const result = await res.json();
-
-    resBox.innerText = "Booking sent successfully!";
-    btn.innerText = "Submit Booking";
-
-  } catch (err) {
-    resBox.innerText = "Error sending booking. Try again.";
+  
+  if (!data.name || !data.email || !data.message) {
+      resBox.innerText = "Please fill in all fields.";
+      return;
   }
 
+  btn.innerText = "Sending...";
+  btn.disabled = true;
+  try {
+    const res = await fetch("https://millie-dav.onrender.com/bookings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error();
+    resBox.innerText = "Booking sent successfully!";
+    btn.innerText = "Submit Booking";
+  } catch (err) { resBox.innerText = "Error. Try again."; }
   btn.disabled = false;
 }
 </script>
-
 </body>
 </html>
-
-
-
