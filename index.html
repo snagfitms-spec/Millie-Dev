@@ -11,45 +11,53 @@
 
 <!-- ================= NAVIGATION ================= -->
 <nav class="navbar">
-    <h2 class="logo">MillieDev</h2>
 
-    <!-- Hamburger (mobile only) -->
-    <div class="hamburger" onclick="toggleMenu()">
-        ☰
+    <div class="logo">MillieDev</div>
+
+    <!-- Hamburger Button -->
+    <div class="menu-btn" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
 
-    <ul id="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="portfolio.html">Portfolio</a></li>
-        <li><a href="courses.html">Courses</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="booking.html">Booking</a></li>
-    </ul>
+    <!-- Floating Menu -->
+    <div class="menu-container">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="courses.html">Courses</a>
+        <a href="about.html">About</a>
+        <a href="booking.html">Booking</a>
+    </div>
+
 </nav>
 
 <!-- ================= HERO SECTION ================= -->
 <section class="hero" id="home">
+
     <div class="hero-text">
         <h1>I Build Websites That <span>Convert</span></h1>
         <p>Modern, fast, and responsive digital solutions for your business.</p>
     </div>
 
-    <!-- Booking Form -->
-    <div id="booking-section" class="form-container">
+    <!-- BOOKING FORM -->
+    <div class="form-container">
         <h3>Book a Service</h3>
 
-        <input id="name" placeholder="Your Name">
-        <input id="email" placeholder="Your Email">
+        <input id="name" type="text" placeholder="Your Name">
+        <input id="email" type="email" placeholder="Your Email">
         <textarea id="message" placeholder="Project details..."></textarea>
 
-        <button onclick="sendBooking()" id="btn">Submit Booking</button>
+        <button id="btn" onclick="sendBooking()">Submit Booking</button>
         <p id="response"></p>
     </div>
+
 </section>
 
 <!-- ================= SERVICES PREVIEW ================= -->
-<section id="services" class="section">
+<section class="section" id="services">
+
     <h2 style="text-align:center; margin-bottom:40px;">
         My Premium Services
     </h2>
@@ -59,6 +67,7 @@
         <div class="card"><h3>E-Commerce</h3><p>Sell online globally.</p></div>
         <div class="card"><h3>Custom Apps</h3><p>Scale your brand.</p></div>
     </div>
+
 </section>
 
 <!-- ================= FOOTER ================= -->
@@ -68,29 +77,27 @@
 
 <!-- ================= SCRIPTS ================= -->
 <script>
+
 /* =========================
-   HAMBURGER MENU TOGGLE
+   HAMBURGER TOGGLE
 ========================= */
 function toggleMenu() {
-    const nav = document.getElementById("nav-links");
-    nav.classList.toggle("show");
+    document.querySelector(".menu-container").classList.toggle("active");
 }
 
 /* =========================
-   BOOKING SYSTEM
+   BOOKING SYSTEM (SAFE)
 ========================= */
 async function sendBooking() {
+
     const btn = document.getElementById("btn");
     const resBox = document.getElementById("response");
 
-    const data = {
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
-        message: document.getElementById("message").value
-    };
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
 
-    // Validation
-    if (!data.name || !data.email || !data.message) {
+    if (!name || !email || !message) {
         resBox.innerText = "Please fill all fields.";
         resBox.style.color = "red";
         return;
@@ -102,8 +109,10 @@ async function sendBooking() {
     try {
         const res = await fetch("https://millie-dav.onrender.com/bookings", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name, email, message })
         });
 
         if (res.ok) {
@@ -119,13 +128,14 @@ async function sendBooking() {
         }
 
     } catch (err) {
-        resBox.innerText = "Error. Try again.";
+        resBox.innerText = "Server error. Try again.";
         resBox.style.color = "red";
     }
 
     btn.innerText = "Submit Booking";
     btn.disabled = false;
 }
+
 </script>
 
 </body>
