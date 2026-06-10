@@ -4,61 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About | MillieDev</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <main class="main-container">
-        
-        <section id="about" class="section">
-            <div class="about-wrapper">
-                
-                <div class="about-text">
-                    <h3>MILLIEDEV DIGITAL SOLUTIONS</h3>
-                    <h1>WEAVING VISION INTO VELOCITY</h1>
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="logo"><h2>MillieDev</h2></div>
 
-                    <p>
-                        MillieDev is a digital development brand focused on creating fast, scalable, 
-                        and visually engaging web experiences for individuals, startups, and 
-                        businesses that want to stand out online.
-                    </p>
-                    <p>
-                        We design and build modern websites, booking systems, portfolios, and 
-                        digital platforms that are optimized for performance, usability, and conversion. 
-                        Every project is crafted with attention to structure, responsiveness, and 
-                        real-world functionality.
-                    </p>
-                    <p>
-                        In a digital world where attention is limited, the goal is simple: build 
-                        systems that are clean, intuitive, and powerful enough to turn visitors 
-                        into clients. We focus on combining design clarity with technical 
-                        reliability so your online presence works for you.
-                    </p>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="booking.html">Book Now</a></li>
+        </ul>
+    </nav>
 
-                    <div class="grid">
-                        <div class="card">
-                            <h4>WHAT WE DO</h4>
-                            <p>Building modern websites, booking systems, and custom digital solutions.</p>
-                        </div>
-                        <div class="card">
-                            <h4>OUR APPROACH</h4>
-                            <p>Clean structure, mobile-first design, and performance-focused development.</p>
-                        </div>
-                        <div class="card">
-                            <h4>OUR GOAL</h4>
-                            <p>To create systems that are beautiful, functional, and conversion-driven.</p>
-                        </div>
-                    </div>
-                </div>
+    <!-- ABOUT SECTION -->
+    <section class="container">
 
-                <div class="about-image-container">
-                    <img src="profile.png" class="about-image" alt="MillieDev Professional Profile">
-                </div>
+        <!-- HEADER -->
+        <h1 style="text-align:center; margin-bottom: 20px;">
+            About MillieDev
+        </h1>
 
+        <p style="text-align:center; margin-bottom: 40px; opacity:0.8;">
+            Building modern digital systems that are fast, scalable, and designed for real impact.
+        </p>
+
+        <!-- CORE STORY CARD -->
+        <div class="card">
+            <h3>Who We Are</h3>
+            <p>
+                MillieDev is a modern digital development brand focused on creating clean,
+                high-performance websites, applications, and digital systems.
+            </p>
+        </div>
+
+        <!-- STRATEGY GRID -->
+        <div class="grid" style="margin-top: 20px;">
+
+            <div class="card">
+                <h3>Our Process</h3>
+                <p>Discover → Design → Develop → Test → Deploy</p>
+                <a href="services.html">Learn more →</a>
             </div>
-        </section>
 
-    </main>
+            <div class="card">
+                <h3>Our Goal</h3>
+                <p>Build conversion-focused, secure and scalable digital systems.</p>
+                <a href="portfolio.html">View work →</a>
+            </div>
+
+            <div class="card">
+                <h3>Why Choose Us</h3>
+                <p>Clean UI, mobile-first design, strong structure and reliability.</p>
+                <a href="courses.html">See learning →</a>
+            </div>
+
+        </div>
+
+        <!-- CONTACT / CTA CARD -->
+        <div class="card" style="margin-top: 20px; text-align:center;">
+            <h3>Let’s Build Something</h3>
+            <p>Need a website, system or digital product? Let’s work together.</p>
+            <a href="booking.html">Start a Project →</a>
+        </div>
+
+    </section>
 
 </body>
 </html>
