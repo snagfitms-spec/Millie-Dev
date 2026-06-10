@@ -3,88 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking</title>
+    <title>Booking | MillieDev</title>
+
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="services.html">Services</a>
-  <a href="portfolio.html">Portfolio</a>
-  <a href="courses.html">Courses</a>
-  <a href="about.html">About</a>
-  <a href="booking.html">Booking</a>
+<!-- ================= NAVIGATION ================= -->
+<nav class="navbar">
+
+    <div class="logo">MillieDev</div>
+
+    <div class="menu-btn" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="menu-container" id="menu">
+        <a href="index.html" onclick="closeMenu()">Home</a>
+        <a href="services.html" onclick="closeMenu()">Services</a>
+        <a href="portfolio.html" onclick="closeMenu()">Portfolio</a>
+        <a href="courses.html" onclick="closeMenu()">Courses</a>
+        <a href="about.html" onclick="closeMenu()">About</a>
+        <a href="booking.html" onclick="closeMenu()">Booking</a>
+    </div>
+
 </nav>
 
+<!-- ================= HERO ================= -->
 <section class="hero">
-  <h1>Book a Service</h1>
-</section>
 
-<section class="box">
+    <h1>Book a Service</h1>
 
-    <input type="text" id="name" placeholder="Your Name">
-    <input type="email" id="email" placeholder="Your Email">
-    <textarea id="message" placeholder="Your Message"></textarea>
-
-    <button id="btn" onclick="bookService()">Submit Booking</button>
-
-    <p id="msg"></p>
+    <p style="text-align:center; opacity:0.7; max-width:650px; margin:15px auto;">
+        Choose a service and send your project details. I’ll respond with a solution plan and pricing.
+    </p>
 
 </section>
 
+<!-- ================= SERVICE OPTIONS ================= -->
+<section style="padding:40px 5%;">
+
+    <h2 style="margin-bottom:20px; color:var(--primary); text-align:center;">
+        Select a Service
+    </h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Web Design</h3>
+            <p>Modern business websites</p>
+        </div>
+
+        <div class="card">
+            <h3>E-Commerce</h3>
+            <p>Online stores & payments</p>
+        </div>
+
+        <div class="card">
+            <h3>Landing Page</h3>
+            <p>High conversion pages</p>
+        </div>
+
+        <div class="card">
+            <h3>Custom System</h3>
+            <p>Advanced web applications</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= BOOKING FORM ================= -->
+<section style="padding:40px 5%;">
+
+    <div class="card">
+
+        <h3>Send Your Request</h3>
+
+        <input type="text" placeholder="Your Name">
+        <input type="email" placeholder="Your Email">
+        <input type="text" placeholder="Service You Want">
+        <textarea placeholder="Describe your project..."></textarea>
+
+        <button>Submit Booking</button>
+
+    </div>
+
+</section>
+
+<!-- ================= WHY SECTION ================= -->
+<section style="padding:40px 5%;">
+
+    <div class="card">
+
+        <h3>Why Work With Me?</h3>
+
+        <p>
+            ✔ Clean modern design<br>
+            ✔ Fast delivery<br>
+            ✔ Mobile-first systems<br>
+            ✔ Business-focused results
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer style="text-align:center; padding:40px; opacity:0.6;">
+    © 2026 MillieDev Portfolio System
+</footer>
+
+<!-- ================= MENU SCRIPT ================= -->
 <script>
-async function bookService() {
 
-    const btn = document.getElementById("btn");
-    const msg = document.getElementById("msg");
-
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const message = document.getElementById("message").value;
-
-    if (!name || !email || !message) {
-        msg.innerText = "Please fill all fields.";
-        msg.style.color = "red";
-        return;
-    }
-
-    btn.innerText = "Sending...";
-    btn.disabled = true;
-
-    try {
-        const res = await fetch("https://millie-dav.onrender.com/bookings", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ name, email, message })
-        });
-
-        const data = await res.json().catch(() => ({}));
-
-        if (res.ok) {
-            msg.innerText = "Booking sent successfully!";
-            msg.style.color = "lightgreen";
-
-            document.getElementById("name").value = "";
-            document.getElementById("email").value = "";
-            document.getElementById("message").value = "";
-
-        } else {
-            msg.innerText = data.message || "Failed to send booking.";
-            msg.style.color = "red";
-        }
-
-    } catch (error) {
-        msg.innerText = "Server error. Try again.";
-        msg.style.color = "red";
-    }
-
-    btn.innerText = "Submit Booking";
-    btn.disabled = false;
+function toggleMenu() {
+    document.getElementById("menu").classList.toggle("active");
 }
+
+function closeMenu() {
+    document.getElementById("menu").classList.remove("active");
+}
+
+window.addEventListener("load", () => {
+    document.getElementById("menu").classList.remove("active");
+});
+
+document.addEventListener("click", function(e) {
+
+    const menu = document.getElementById("menu");
+    const btn = document.querySelector(".menu-btn");
+
+    if (!menu || !btn) return;
+
+    if (!menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.remove("active");
+    }
+
+});
+
 </script>
 
 </body>
