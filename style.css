@@ -239,21 +239,12 @@ section {
     }
 
     .hamburger {
-        display: block;
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #00bcd4; /* nice accent color */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
     }
-
-    nav ul {
-        position: absolute;
-        top: 70px;
-        right: 0;
-        width: 200px;
-        background: white;
-        flex-direction: column;
-        padding: 10px;
-        display: none;
-    }
-
-    nav ul.show {
-        display: flex;
-    }
-       }
