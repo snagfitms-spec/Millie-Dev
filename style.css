@@ -238,13 +238,62 @@ section {
         padding: 15px;
     }
 
-    .hamburger {
-    display: none;
-    font-size: 28px;
-    cursor: pointer;
-    color: #00bcd4; /* nice accent color */
-    position: absolute;
+    /* The Hamburger Button */
+.menu-btn {
+    position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 999;
-    }
+    z-index: 3000;
+    background: #111827;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.menu-btn span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #ffffff;
+    margin: 5px 0;
+}
+
+/* The Menu Overlay */
+.menu-container {
+    position: fixed;
+    top: 80px; /* Sits below the header */
+    right: 20px;
+    z-index: 2500;
+    
+    /* Frosted glass effect */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    
+    padding: 20px;
+    border-radius: 12px;
+    display: none; /* Hidden by default */
+    text-align: right;
+}
+
+/* Show menu when active */
+.menu-container.active {
+    display: block;
+}
+
+/* The Links */
+.menu-container a {
+    display: block;
+    color: #ffffff;
+    font-size: 1.2rem;
+    padding: 12px 0;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.menu-container a:hover {
+    color: var(--primary);
+}
+
