@@ -1,96 +1,52 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const jwt = require("jsonwebtoken");
+<script>
+async function bookService() {
 
-const app = express();
+    const btn = document.getElementById("btn");
+    const msg = document.getElementById("msg");
 
-app.use(express.json());
-app.use(cors());
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
 
-// =========================
-// DATABASE
-// =========================
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log("MongoDB error:", err));
+    if (!name || !email || !message) {
+        msg.innerText = "Please fill all fields.";
+        msg.style.color = "red";
+        return;
+    }
 
-// =========================
-// BOOKING MODEL
-// =========================
-const Booking = mongoose.model("Booking", {
-  name: String,
-  email: String,
-  service: String,
-  message: String,
-  createdAt: { type: Date, default: Date.now }
-});
+    btn.innerText = "Sending...";
+    btn.disabled = true;
 
-// =========================
-// AUTH ROUTES & MIDDLEWARE
-// =========================
-const ADMIN_USER = "admin";
-const ADMIN_PASS = "1234";
+    try {
+        const res = await fetch("https://millie-dav.onrender.com/bookings", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name, email, message })
+        });
 
-app.post("/admin/login", (req, res) => {
-  // DIAGNOSTIC LOG: This shows up in your Render Logs dashboard
-  console.log("Login attempt received:", req.body);
+        const data = await res.json().catch(() => ({}));
 
-  const { username, password } = req.body;
+        if (res.ok) {
+            msg.innerText = "Booking sent successfully!";
+            msg.style.color = "lightgreen";
 
-  if (username === ADMIN_USER && password === ADMIN_PASS) {
-    const token = jwt.sign({ user: "admin" }, process.env.JWT_SECRET, { expiresIn: "1h" });
-    return res.json({ success: true, token: token });
-  }
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("message").value = "";
 
-  return res.status(401).json({ success: false, message: "Invalid login" });
-});
+        } else {
+            msg.innerText = data.message || "Failed to send booking.";
+            msg.style.color = "red";
+        }
 
-function authMiddleware(req, res, next) {
-  const auth = req.headers.authorization;
-  if (!auth) return res.status(403).json({ message: "No token provided" });
+    } catch (error) {
+        msg.innerText = "Server error. Try again.";
+        msg.style.color = "red";
+    }
 
-  const token = auth.split(" ")[1];
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) return res.status(403).json({ message: "Invalid or expired token" });
-    next();
-  });
+    btn.innerText = "Submit Booking";
+    btn.disabled = false;
 }
-
-// =========================
-// BOOKING ROUTES
-// =========================
-app.post("/bookings", async (req, res) => {
-  try {
-    const booking = await Booking.create(req.body);
-    res.json({ success: true, booking });
-  } catch (err) {
-    res.status(500).json({ message: "Error saving booking" });
-  }
-});
-
-app.get("/bookings", authMiddleware, async (req, res) => {
-  try {
-    const bookings = await Booking.find().sort({ createdAt: -1 });
-    res.json(bookings);
-  } catch (err) {
-    res.status(500).json({ message: "Error fetching bookings" });
-  }
-});
-
-app.delete("/bookings/:id", authMiddleware, async (req, res) => {
-  try {
-    await Booking.findByIdAndDelete(req.params.id);
-    res.json({ success: true, message: "Deleted successfully" });
-  } catch (err) {
-    res.status(500).json({ message: "Delete operation failed" });
-  }
-});
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log("Server running on port " + PORT));
-
-
-
-
+</script>
