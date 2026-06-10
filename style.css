@@ -1,5 +1,5 @@
 /* =========================
-   DESIGN SYSTEM (CLEAN + FINAL)
+   DESIGN SYSTEM (FINAL CLEAN BUILD)
 ========================= */
 
 :root {
@@ -14,20 +14,19 @@
     --muted: #94A3B8;
 
     /* BRAND COLORS */
-    --primary: #38BDF8;     /* cyan */
-    --accent: #FF4FD8;      /* hot pink highlight */
-    --accent-soft: #C084FC; /* purple depth */
+    --primary: #38BDF8;
+    --accent: #FF4FD8;
+    --accent-soft: #C084FC;
 
-    /* SUPPORT COLORS */
+    /* SUPPORT */
     --success: #22C55E;
     --warning: #F59E0B;
-    --info: #60A5FA;
 
-    /* UI STRUCTURE */
+    /* UI */
     --card: rgba(255,255,255,0.04);
     --border: rgba(255,255,255,0.10);
 
-    /* GRADIENTS */
+    /* GRADIENT */
     --gradient: linear-gradient(135deg, #38BDF8, #6366F1, #FF4FD8);
 }
 
@@ -83,12 +82,6 @@ a:hover {
     z-index: 1000;
 }
 
-.navbar ul {
-    display: flex;
-    list-style: none;
-    gap: 15px;
-}
-
 /* =========================
    HERO
 ========================= */
@@ -116,7 +109,7 @@ a:hover {
 }
 
 /* =========================
-   CARDS
+   CARDS (FIXED STRUCTURE)
 ========================= */
 
 .card {
@@ -124,6 +117,9 @@ a:hover {
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 20px;
+
+    display: flex;
+    flex-direction: column;
 
     transition: 0.3s ease;
 }
@@ -140,6 +136,39 @@ a:hover {
 
 .card:hover h3 {
     color: var(--accent);
+}
+
+/* =========================
+   CLEAN CTA (NO OVERLAP, NO CONFLICTS)
+========================= */
+
+.card a {
+    display: inline-flex;
+    align-self: flex-start;
+
+    margin-top: 12px;
+
+    padding: 6px 10px;
+
+    font-size: 0.85rem;
+    font-weight: 500;
+
+    color: var(--text);
+    text-decoration: none;
+
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    transition: 0.25s ease;
+}
+
+.card a:hover {
+    color: var(--accent);
+    background: rgba(255, 79, 216, 0.12);
+    border-color: rgba(255, 79, 216, 0.4);
+    transform: translateY(-2px);
 }
 
 /* =========================
@@ -194,11 +223,10 @@ button {
     margin: 5px 0;
 
     background: var(--text);
-    transition: 0.3s ease;
 }
 
 /* =========================
-   HAMBURGER MENU (FIXED + FLOATING)
+   HAMBURGER MENU (CLEAN FLOAT)
 ========================= */
 
 .menu-container {
@@ -211,9 +239,12 @@ button {
 
     z-index: 9998;
 
-    background: transparent;
-    border: none;
-    padding: 0;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid var(--border);
+    padding: 12px;
+    border-radius: 12px;
+
+    min-width: 160px;
 }
 
 .menu-container.active {
@@ -222,103 +253,20 @@ button {
 
 .menu-container a {
     padding: 10px 0;
-
-    color: var(--text);
-    font-size: 15px;
-    font-weight: 500;
-
-    transition: 0.25s ease;
+    font-size: 14px;
 }
 
 /* =========================
-   MAKE ENTIRE CARD CLICKABLE FEEL
+   MOBILE FIX
 ========================= */
 
-.card {
-    cursor: pointer;
-    position: relative;
-}
+@media (max-width: 768px) {
 
-/* Expand clickable area to full card */
-.card a {
-    position: absolute;
-    inset: 0;
+    .hero h1 {
+        font-size: 1.8rem;
+    }
 
-    display: flex;
-    align-items: flex-end;
-
-    padding: 20px;
-
-    font-size: 0.85rem;
-    font-weight: 500;
-
-    color: transparent; /* hides text visually but keeps link active */
-
-    text-decoration: none;
-}
-
-/* Visible CTA badge (floating button) */
-.card a::after {
-    content: "View More →";
-
-    position: absolute;
-    bottom: 15px;
-    left: 15px;
-
-    padding: 6px 10px;
-
-    font-size: 0.8rem;
-    font-weight: 500;
-
-    color: var(--text);
-
-    border-radius: 999px;
-
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-
-    transition: 0.25s ease;
-}
-
-/* =========================
-   FIXED CARD CTA (NO OVERLAP)
-========================= */
-
-.card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-/* CTA link always at bottom */
-.card a {
-    display: inline-flex;
-    align-self: flex-start;
-
-    margin-top: 15px;
-
-    padding: 6px 10px;
-
-    font-size: 0.85rem;
-    font-weight: 500;
-
-    color: var(--text);
-    text-decoration: none;
-
-    border-radius: 999px;
-
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-
-    transition: 0.25s ease;
-}
-
-/* hover effect */
-.card a:hover {
-    color: var(--accent);
-
-    background: rgba(255, 79, 216, 0.12);
-    border-color: rgba(255, 79, 216, 0.4);
-
-    transform: translateY(-2px);
-}
+    .grid {
+        grid-template-columns: 1fr;
+    }
+   }
