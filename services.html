@@ -1,114 +1,165 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services | MillieDev</title><link rel="stylesheet" href="style.css">
-<link rel="manifest" href="manifest.json">
+    <title>Services | MillieDev</title>
 
-</head><body><!-- ================= NAVIGATION ================= --><nav class="navbar"><div class="logo">MillieDev</div>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
 
-<div class="menu-btn" onclick="toggleMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
-</div>
+<body>
 
-<div class="menu-container" id="menu">
-    <a href="index.html" onclick="closeMenu()">Home</a>
-    <a href="services.html" onclick="closeMenu()">Services</a>
-    <a href="portfolio.html" onclick="closeMenu()">Portfolio</a>
-    <a href="courses.html" onclick="closeMenu()">Courses</a>
-    <a href="about.html" onclick="closeMenu()">About</a>
-    <a href="booking.html" onclick="closeMenu()">Booking</a>
-</div>
+<!-- ================= NAVIGATION (UNIFIED SYSTEM) ================= -->
+<nav class="navbar">
 
-</nav><!-- ================= SERVICES SECTION ================= --><section class="container"><h1 style="
-    text-align:center;
-    margin-bottom:50px;
-    color:var(--accent);
-">
-    My Premium Services
-</h1>
+    <div class="logo">MillieDev</div>
 
-<div class="grid">
-
-    <div class="card">
-        <h3>Custom Web Design</h3>
-        <p>Modern, responsive, high-converting websites.</p>
+    <div class="menu-btn" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
 
-    <div class="card">
-        <h3>E-Commerce Sites</h3>
-        <p>Fully functional online stores.</p>
+    <div class="menu-container" id="menu">
+        <a href="index.html" onclick="closeMenu()">Home</a>
+        <a href="services.html" onclick="closeMenu()">Services</a>
+        <a href="portfolio.html" onclick="closeMenu()">Portfolio</a>
+        <a href="courses.html" onclick="closeMenu()">Courses</a>
+        <a href="about.html" onclick="closeMenu()">About</a>
+        <a href="booking.html" onclick="closeMenu()">Booking</a>
     </div>
 
-    <div class="card">
-        <h3>Landing Pages</h3>
-        <p>Conversion-focused pages that drive results.</p>
+</nav>
+
+<!-- ================= HERO SECTION ================= -->
+<section class="hero">
+
+    <h1>My Premium Services</h1>
+    <p style="text-align:center; opacity:0.7; max-width:600px; margin:auto;">
+        I build high-performance digital solutions designed to grow your business, attract clients, and convert traffic.
+    </p>
+
+</section>
+
+<!-- ================= SERVICE CATEGORIES ================= -->
+
+<section>
+
+    <!-- BUILD -->
+    <h2 style="color:var(--primary); margin-bottom:20px;">Build</h2>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Custom Web Design</h3>
+            <p>Modern, responsive, high-converting websites.</p>
+        </div>
+
+        <div class="card">
+            <h3>Landing Pages</h3>
+            <p>Conversion-focused pages that drive results.</p>
+        </div>
+
+        <div class="card">
+            <h3>E-Commerce Sites</h3>
+            <p>Fully functional online stores built for sales.</p>
+        </div>
     </div>
 
-    <div class="card">
-        <h3>Custom Development</h3>
-        <p>Full-stack software solutions for your brand.</p>
+</section>
+
+<section>
+
+    <!-- SCALE -->
+    <h2 style="color:var(--accent); margin-bottom:20px;">Scale</h2>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Custom Development</h3>
+            <p>Full-stack software solutions for your brand.</p>
+        </div>
+
+        <div class="card">
+            <h3>UI/UX Design</h3>
+            <p>Beautiful, user-friendly digital experiences.</p>
+        </div>
+
+        <div class="card">
+            <h3>Performance SEO</h3>
+            <p>Improve rankings and increase traffic.</p>
+        </div>
     </div>
 
-    <div class="card">
-        <h3>UI/UX Design</h3>
-        <p>Beautiful, user-friendly experiences.</p>
+</section>
+
+<section>
+
+    <!-- SUPPORT -->
+    <h2 style="color:var(--muted); margin-bottom:20px;">Support</h2>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Technical Support</h3>
+            <p>Reliable support for your digital systems.</p>
+        </div>
+
+        <div class="card">
+            <h3>Online Courses</h3>
+            <p>Learn modern digital skills and business growth.</p>
+        </div>
     </div>
 
-    <div class="card">
-        <h3>Technical Support</h3>
-        <p>Reliable support for your digital systems.</p>
-    </div>
+</section>
 
-    <div class="card">
-        <h3>Online Courses</h3>
-        <p>Learn modern digital skills and business growth.</p>
-    </div>
+<!-- ================= CTA SECTION ================= -->
+<section style="text-align:center; padding:80px 5%;">
 
-    <div class="card">
-        <h3>Performance SEO</h3>
-        <p>Improve rankings and increase traffic.</p>
-    </div>
+    <h2>Ready to build something powerful?</h2>
 
-</div>
+    <p style="opacity:0.7; margin:20px 0;">
+        Let’s turn your idea into a high-converting digital product.
+    </p>
 
-</section><!-- ================= FOOTER ================= --><footer style="
-    text-align:center;
-    padding:40px;
-    opacity:0.6;
-">
+    <a href="booking.html">
+        <button style="max-width:250px;">Book a Service</button>
+    </a>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer style="text-align:center; padding:40px; opacity:0.6;">
     © 2026 MillieDev Portfolio System
-</footer><!-- ================= MENU SCRIPT ================= --><script>
+</footer>
+
+<!-- ================= MENU SCRIPT ================= -->
+<script>
 
 function toggleMenu() {
-    const menu = document.getElementById("menu");
-    menu.classList.toggle("active");
+    document.getElementById("menu").classList.toggle("active");
 }
 
 function closeMenu() {
-    const menu = document.getElementById("menu");
-    menu.classList.remove("active");
+    document.getElementById("menu").classList.remove("active");
 }
 
-/* FORCE CLEAN STATE ON LOAD */
+/* ALWAYS RESET MENU STATE */
 window.addEventListener("load", () => {
-    const menu = document.getElementById("menu");
-    if (menu) menu.classList.remove("active");
+    document.getElementById("menu").classList.remove("active");
 });
 
-/* CLICK OUTSIDE TO CLOSE */
+/* CLOSE ON OUTSIDE CLICK */
 document.addEventListener("click", function(e) {
 
     const menu = document.getElementById("menu");
     const btn = document.querySelector(".menu-btn");
-
-    if (!menu || !btn) return;
 
     if (!menu.contains(e.target) && !btn.contains(e.target)) {
         menu.classList.remove("active");
     }
 });
 
-</script></body>
+</script>
+
+</body>
 </html>
