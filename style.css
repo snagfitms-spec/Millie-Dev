@@ -267,10 +267,81 @@ section {
 .menu-container a {
     color: white;
     text-decoration: none;
+   
     padding: 8px 0;
 }
 
 .menu-container a:hover {
     color: #00bcd4;
+   }
+
+/* =========================
+   PREMIUM DESIGN SYSTEM v1
+========================= */
+
+:root {
+    --bg: #070B14;          /* deeper premium black-blue */
+    --panel: #0F172A;      /* soft card background */
+    --card: rgba(255,255,255,0.04); /* glass cards */
+    --text: #E6EDF7;       /* soft white */
+    --muted: #94A3B8;      /* secondary text */
+    --primary: #38BDF8;    /* premium cyan */
+    --accent: #A78BFA;     /* purple glow accent */
+}
+
+/* GLOBAL RESET */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: radial-gradient(
+        circle at top,
+        #0B1220,
+        var(--bg)
+    );
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+/* LINKS */
+a {
+    color: var(--text);
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary);
+}
+
+/* =========================
+   GLASS CARD SYSTEM
+========================= */
+
+.card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border-radius: 16px;
+    padding: 20px;
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(56,189,248,0.4);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* =========================
+   GRID (CLEAN SPACING)
+========================= */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
    }
 
