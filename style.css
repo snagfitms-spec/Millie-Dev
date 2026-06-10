@@ -270,3 +270,55 @@ button {
         grid-template-columns: 1fr;
     }
    }
+
+/* =========================
+   FINAL HAMBURGER RESET FIX
+========================= */
+
+/* FORCE REMOVE ANY OLD BACKGROUNDS OR BORDERS */
+.menu-container {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* CLOSED STATE = NEVER VISIBLE */
+.menu-container {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    z-index: 9998;
+}
+
+/* OPEN STATE */
+.menu-container.active {
+    display: flex;
+}
+
+/* MENU LINKS = PURE FLOATING TEXT STYLE */
+.menu-container a {
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+
+    padding: 8px 0;
+    background: transparent !important;
+    border: none !important;
+
+    transition: 0.2s ease;
+}
+
+/* HOVER = ONLY COLOR SHIFT (NO BACKGROUND) */
+.menu-container a:hover {
+    color: var(--accent);
+    transform: translateX(4px);
+}
+
+/* HAMBURGER ICON ALWAYS CLEAN */
+.menu-btn {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
