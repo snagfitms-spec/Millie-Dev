@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Courses | MillieDev</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
+    <!-- NAVIGATION -->
     <nav>
-        <div class="logo">MillieDev</div>
+        <div class="logo"><h2>MillieDev</h2></div>
+
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="services.html">Services</a></li>
@@ -20,27 +24,38 @@
         </ul>
     </nav>
 
-    <section class="section">
-        <h1>Courses</h1>
-        <p>Learn web development, design, and digital skills.</p>
-        
-        <br>
+    <!-- COURSES SECTION -->
+    <section class="container">
 
-        <!-- The feed container forces the vertical stack -->
-        <div class="courses-container">
-            <div class="feed-card">
+        <!-- HEADER -->
+        <h1 style="text-align:center; margin-bottom: 20px;">
+            Courses
+        </h1>
+
+        <p style="text-align:center; margin-bottom: 40px; opacity:0.8;">
+            Learn web development, design, and digital skills step by step.
+        </p>
+
+        <!-- CARD FEED (FIXED SYSTEM) -->
+        <div class="grid">
+
+            <div class="card">
                 <h3>HTML & CSS Basics</h3>
-                <p>Master the building blocks of the web.</p>
+                <p>Master the building blocks of the web and learn how websites are structured and styled.</p>
             </div>
-            <div class="feed-card">
+
+            <div class="card">
                 <h3>JavaScript Fundamentals</h3>
-                <p>Learn to make your websites interactive.</p>
+                <p>Learn how to make websites interactive with logic, functions, and dynamic behavior.</p>
             </div>
-            <div class="feed-card">
+
+            <div class="card">
                 <h3>Full Stack Intro</h3>
-                <p>Understand the end-to-end development process.</p>
+                <p>Understand frontend + backend systems and how real-world applications are built.</p>
             </div>
+
         </div>
+
     </section>
 
 </body>
