@@ -1,16 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MillieDev Admin Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MillieDev Admin Dashboard</title>
+
+<style>
+/* ================= YOUR ORIGINAL STYLES ================= */
+body { margin: 0; font-family: "Segoe UI", Arial, sans-serif; background: #0a0f1f; color: #fff; display: flex; }
+.sidebar { width: 260px; height: 100vh; background: #0f1629; padding: 25px; position: fixed; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); transition: 0.3s; z-index: 1000; }
+.logo { font-size: 22px; font-weight: bold; color: #6C63FF; margin-bottom: 30px; letter-spacing: 1px; }
+.nav a { display: block; padding: 12px; margin-bottom: 8px; border-radius: 10px; text-decoration: none; color: #aaa; transition: 0.3s; }
+.nav a:hover { background: rgba(108,99,255,0.15); color: #fff; transform: translateX(3px); }
+.main { margin-left: 260px; width: calc(100% - 260px); transition: 0.3s; }
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; background: #0f1629; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; padding: 25px; }
+.stat { background: linear-gradient(145deg, #111a2e, #0f1629); padding: 18px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05); }
+.grid { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; padding: 0 25px 25px; }
+.panel { background: linear-gradient(145deg, #111a2e, #0f1629); padding: 18px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05); }
+.search { padding: 10px; width: 260px; border-radius: 10px; border: none; background: #111a2e; color: #fff; }
+
+/* ================= NEW: HAMBURGER & MOBILE FIXES ================= */
+.hamburger { display: none; padding: 15px; cursor: pointer; font-size: 24px; }
+
+@media (max-width: 900px) {
+    .hamburger { display: block; }
+    .sidebar { left: -260px; } /* Hide sidebar off-screen */
+    .sidebar.active { left: 0; } /* Slide in */
+    .main { margin-left: 0; width: 100%; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .grid { grid-template-columns: 1fr; }
+}
+</style>
 </head>
+
 <body>
 
-<!-- Hamburger Menu Button -->
-<div class="hamburger" onclick="toggleMenu()">☰</div>
+<div class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('active')">☰</div>
 
-<!-- Sidebar -->
 <div class="sidebar">
     <div class="logo">MillieDev</div>
     <div class="nav">
@@ -23,16 +50,12 @@
     </div>
 </div>
 
-<!-- Main Content -->
 <div class="main">
-
-    <!-- Topbar -->
     <div class="topbar">
         <h2>Dashboard Overview</h2>
         <input class="search" placeholder="Search bookings...">
     </div>
 
-    <!-- Stats -->
     <div class="stats">
         <div class="stat"><h3>156</h3><p>Total Bookings</p></div>
         <div class="stat"><h3>28</h3><p>New This Week</p></div>
@@ -40,7 +63,6 @@
         <div class="stat"><h3>68%</h3><p>Conversion Rate</p></div>
     </div>
 
-    <!-- Grid -->
     <div class="grid">
         <div class="panel">
             <h3>Recent Bookings</h3>
@@ -49,19 +71,9 @@
         <div class="panel">
             <h3>Analytics</h3>
             <p style="opacity:0.6;">Charts coming soon</p>
-            <h3 style="margin-top:20px;">Top Services</h3>
-            <p style="opacity:0.6;">Breakdown coming soon</p>
         </div>
     </div>
 </div>
-
-<!-- JavaScript for Mobile Menu -->
-<script>
-    function toggleMenu() {
-        const sidebar = document.querySelector('.sidebar');
-        sidebar.classList.toggle('active');
-    }
-</script>
 
 </body>
 </html>
