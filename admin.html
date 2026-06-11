@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MillieDev Admin Dashboard - Layer 2</title>
+<title>MillieDev Admin Dashboard (Layer 3)</title>
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -21,6 +21,8 @@
     --green: #22C55E;
     --orange: #F59E0B;
     --pink: #FF4FD8;
+
+    --border: rgba(255,255,255,0.08);
 }
 
 /* ================= BASE ================= */
@@ -36,10 +38,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
+
+    padding: 14px 18px;
     background: #0f1629;
+
     position: sticky;
     top: 0;
+    z-index: 999;
 }
 
 .logo {
@@ -47,11 +52,59 @@ body {
     color: var(--blue);
 }
 
+/* NAV LINKS (desktop) */
+.menu {
+    display: flex;
+    gap: 15px;
+}
+
 .menu a {
     color: var(--muted);
-    margin-left: 15px;
     text-decoration: none;
     font-size: 14px;
+}
+
+.menu a:hover {
+    color: white;
+}
+
+/* ================= HAMBURGER ================= */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+}
+
+.hamburger span {
+    width: 22px;
+    height: 2px;
+    background: white;
+}
+
+/* MOBILE MENU */
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+
+    position: absolute;
+    top: 60px;
+    right: 10px;
+
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.mobile-menu a {
+    padding: 8px;
+    color: var(--muted);
+    text-decoration: none;
+}
+
+.mobile-menu.active {
+    display: flex;
 }
 
 /* ================= STATS ================= */
@@ -64,14 +117,15 @@ body {
 
 .card {
     background: var(--panel);
+    border: 1px solid var(--border);
     padding: 14px;
     border-radius: 12px;
 }
 
 .icon {
-    width: 35px;
-    height: 35px;
-    border-radius: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
     margin-bottom: 8px;
 }
 
@@ -81,56 +135,57 @@ body {
 .pink { background: var(--pink); }
 
 /* ================= REVENUE SECTION ================= */
-.revenue-wrapper {
+.revenue {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr; /* LEFT bars | RIGHT donut */
     gap: 12px;
     padding: 15px;
 }
 
-/* LEFT - BARS */
+/* LEFT: BARS */
 .bars {
     background: var(--panel);
-    padding: 15px;
     border-radius: 12px;
+    padding: 15px;
+    border: 1px solid var(--border);
 }
 
 .bar {
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
 .bar-title {
     font-size: 13px;
-    margin-bottom: 6px;
     color: var(--muted);
+    margin-bottom: 5px;
 }
 
 .track {
     height: 6px;
     background: rgba(255,255,255,0.08);
-    border-radius: 10px;
+    border-radius: 20px;
     overflow: hidden;
 }
 
 .fill {
     height: 6px;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
-/* RIGHT - DONUT */
-.donut-box {
+/* RIGHT: DONUT */
+.donut {
     background: var(--panel);
-    padding: 15px;
     border-radius: 12px;
-    text-align: center;
+    padding: 15px;
+    border: 1px solid var(--border);
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .center-text {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     text-align: center;
 }
 
@@ -139,7 +194,7 @@ body {
     color: var(--blue);
 }
 
-/* ================= BOOKINGS ================= */
+/* ================= GRID ================= */
 .grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -149,8 +204,17 @@ body {
 
 .panel {
     background: var(--panel);
+    border: 1px solid var(--border);
     padding: 15px;
     border-radius: 12px;
+}
+
+/* ================= BOOKING ================= */
+.booking {
+    background: #0f1629;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 /* ================= MOBILE ================= */
@@ -160,12 +224,20 @@ body {
         grid-template-columns: 1fr 1fr;
     }
 
-    .revenue-wrapper {
+    .revenue {
         grid-template-columns: 1fr;
     }
 
     .grid {
         grid-template-columns: 1fr;
+    }
+
+    .menu {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
     }
 }
 
@@ -176,14 +248,32 @@ body {
 
 <!-- TOPBAR -->
 <div class="topbar">
+
     <div class="logo">MillieDev Admin</div>
 
+    <!-- DESKTOP MENU -->
     <div class="menu">
         <a href="#">Dashboard</a>
         <a href="#">Bookings</a>
         <a href="#">Analytics</a>
         <a href="#">Settings</a>
     </div>
+
+    <!-- HAMBURGER -->
+    <div class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#">Dashboard</a>
+        <a href="#">Bookings</a>
+        <a href="#">Analytics</a>
+        <a href="#">Settings</a>
+    </div>
+
 </div>
 
 <!-- STATS -->
@@ -192,7 +282,7 @@ body {
     <div class="card">
         <div class="icon blue"></div>
         <h3>Total Bookings</h3>
-        <p>156</p>
+        <p id="totalBookings">0</p>
     </div>
 
     <div class="card">
@@ -204,7 +294,7 @@ body {
     <div class="card">
         <div class="icon green"></div>
         <h3>Revenue</h3>
-        <p>$24,780</p>
+        <p id="revenueTotal">$0</p>
     </div>
 
     <div class="card">
@@ -215,44 +305,42 @@ body {
 
 </div>
 
-<!-- REVENUE SECTION (MAIN FIX) -->
-<div class="revenue-wrapper">
+<!-- REVENUE SECTION -->
+<div class="revenue">
 
     <!-- LEFT: BARS -->
     <div class="bars">
-
         <h3>Service Performance</h3>
 
         <div class="bar">
             <div class="bar-title">Web Design</div>
-            <div class="track"><div class="fill green" style="width:75%"></div></div>
+            <div class="track"><div class="fill green" style="width:70%"></div></div>
         </div>
 
         <div class="bar">
             <div class="bar-title">E-commerce</div>
-            <div class="track"><div class="fill blue" style="width:60%"></div></div>
+            <div class="track"><div class="fill blue" style="width:55%"></div></div>
         </div>
 
         <div class="bar">
             <div class="bar-title">Landing Pages</div>
-            <div class="track"><div class="fill orange" style="width:45%"></div></div>
+            <div class="track"><div class="fill orange" style="width:40%"></div></div>
         </div>
 
         <div class="bar">
             <div class="bar-title">Custom Systems</div>
             <div class="track"><div class="fill pink" style="width:80%"></div></div>
         </div>
-
     </div>
 
     <!-- RIGHT: DONUT -->
-    <div class="donut-box">
+    <div class="donut">
 
         <canvas id="revenueChart"></canvas>
 
         <div class="center-text">
-            <h2>$24,780</h2>
-            <p style="color:var(--muted); font-size:12px;">Total Revenue</p>
+            <h2 id="centerRevenue">$24,780</h2>
+            <p style="color:var(--muted);font-size:12px;">Total Revenue</p>
         </div>
 
     </div>
@@ -268,13 +356,18 @@ body {
     </div>
 
     <div class="panel">
-        <h3>Booking Trend</h3>
-        <p style="opacity:0.6;">(Next upgrade: live chart / trading style graph)</p>
+        <h3>Booking Trend (Ready for Live Chart)</h3>
+        <p style="color:var(--muted)">Socket.io + MongoDB stream will plug here next</p>
     </div>
 
 </div>
 
 <script>
+
+/* ================= HAMBURGER ================= */
+function toggleMenu() {
+    document.getElementById("mobileMenu").classList.toggle("active");
+}
 
 /* ================= CHART ================= */
 const ctx = document.getElementById("revenueChart");
@@ -282,9 +375,9 @@ const ctx = document.getElementById("revenueChart");
 new Chart(ctx, {
     type: "doughnut",
     data: {
-        labels: ["Web Design", "E-commerce", "Landing Pages", "Custom"],
+        labels: ["Web Design", "E-commerce", "Landing", "Custom"],
         datasets: [{
-            data: [75, 60, 45, 80],
+            data: [70, 55, 40, 80],
             backgroundColor: ["#22C55E", "#38BDF8", "#F59E0B", "#FF4FD8"],
             borderWidth: 0
         }]
@@ -292,12 +385,64 @@ new Chart(ctx, {
     options: {
         cutout: "70%",
         plugins: {
-            legend: {
-                display: false
-            }
+            legend: { display: false }
         }
     }
 });
+
+/* ================= BACKEND HOOK READY ================= */
+const API_URL = "https://millie-dav.onrender.com";
+
+async function loadBookings() {
+
+    try {
+        const token = localStorage.getItem("token");
+
+        const res = await fetch(`${API_URL}/bookings`, {
+            headers: { Authorization: "Bearer " + token }
+        });
+
+        const data = await res.json();
+
+        document.getElementById("totalBookings").innerText = data.length;
+
+        const container = document.getElementById("cards");
+        container.innerHTML = "";
+
+        data.forEach(b => {
+
+            const div = document.createElement("div");
+            div.classList.add("booking");
+
+            div.innerHTML = `
+                <h4>${b.name}</h4>
+                <p>${b.email}</p>
+                <small>${b.service || "General"}</small>
+                <p>${b.message}</p>
+                <button onclick="deleteBooking('${b._id}')">Delete</button>
+            `;
+
+            container.appendChild(div);
+        });
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+async function deleteBooking(id) {
+
+    const token = localStorage.getItem("token");
+
+    await fetch(`${API_URL}/bookings/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: "Bearer " + token }
+    });
+
+    loadBookings();
+}
+
+loadBookings();
 
 </script>
 
