@@ -1,35 +1,65 @@
-function bookService() {
-    // 1. Capture the input values from the HTML
-    // These IDs (name, email, message) match your booking.html perfectly
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
-    const msgElement = document.getElementById('msg');
+document.addEventListener("DOMContentLoaded", function () {
 
-    // 2. Professional Validation
-    // .trim() ensures that a user cannot just send empty spaces
-    if (name.trim() === "" || email.trim() === "" || message.trim() === "") {
-        msgElement.innerText = "Please fill in all fields to proceed.";
-        msgElement.style.color = "#ef4444"; // Matches your error red
-        return; // Stop the function here if fields are empty
-    }
+    const form = document.getElementById("bookingForm");
 
-    // 3. Success Feedback
-    // This updates the <p id="msg"></p> in your HTML to show the success message
-    msgElement.innerText = "Thank you, " + name + "! Your project details have been received.";
-    msgElement.style.color = "#3b82f6"; // Matches your primary brand color
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
 
-    // 4. Console Verification (For Developer Debugging)
-    // This allows you to check in the browser console that the data was captured
-    console.log("--- New Booking Request ---");
-    console.log("Client Name:", name);
-    console.log("Client Email:", email);
-    console.log("Project Details:", message);
-    console.log("---------------------------");
-    
-    // Optional: Clear the form after a successful submission
-    document.getElementById('name').value = "";
-    document.getElementById('email').value = "";
-    document.getElementById('message').value = "";
-}
+        // =========================
+        // 1. COLLECT DATA
+        // =========================
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const service = document.getElementById("service").value.trim();
+        const message = document.getElementById("message").value.trim();
+        const msg = document.getElementById("msg");
 
+        // =========================
+        // 2. VALIDATION
+        // =========================
+        if (!name || !email || !message) {
+            msg.innerText = "Please fill in all required fields.";
+            msg.style.color = "red";
+            return;
+        }
+
+        // =========================
+        // 3. SEND TO BACKEND
+        // =========================
+        try {
+            const response = await fetch("http://localhost:5000/bookings", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    service,
+                    message
+                })
+            });
+
+            const data = await response.json();
+
+            // =========================
+            // 4. SUCCESS RESPONSE
+            // =========================
+            if (data.success) {
+                msg.innerText = "Booking submitted successfully!";
+                msg.style.color = "lightgreen";
+
+                form.reset();
+            } else {
+                msg.innerText = "Failed to submit booking.";
+                msg.style.color = "red";
+            }
+
+        } catch (error) {
+            console.error("Booking Error:", error);
+            msg.innerText = "Server error. Please try again.";
+            msg.style.color = "red";
+        }
+    });
+
+});
