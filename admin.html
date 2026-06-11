@@ -3,148 +3,160 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Admin Dashboard</title>
+<title>Admin Dashboard | MillieDev</title>
 
 <style>
-
-body{
-    font-family:Arial,sans-serif;
-    background:#070A12;
-    color:white;
-    padding:20px;
+body {
+    font-family: Arial, sans-serif;
+    background: #070A12;
+    color: white;
+    margin: 0;
+    padding: 20px;
 }
 
-h1{
-    text-align:center;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-.booking{
-    background:#11182a;
-    padding:20px;
-    border-radius:10px;
-    margin-bottom:15px;
+h1 {
+    margin: 0;
 }
 
-button{
-    background:#ef4444;
-    color:white;
-    border:none;
-    padding:10px 15px;
-    border-radius:6px;
-    cursor:pointer;
+button {
+    background: #6C63FF;
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
-.logout{
-    background:#6C63FF;
-    margin-bottom:20px;
+.container {
+    max-width: 900px;
+    margin: auto;
 }
 
+.card {
+    background: #11182a;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    margin: 0;
+}
+
+.card p {
+    margin: 5px 0;
+    opacity: 0.9;
+}
+
+.actions {
+    margin-top: 10px;
+}
+
+.delete {
+    background: #ef4444;
+}
 </style>
 </head>
 
 <body>
 
-<h1>Admin Dashboard</h1>
+<div class="container">
 
-<button class="logout" onclick="logout()">
-Logout
-</button>
+    <div class="header">
+        <h1>Admin Dashboard</h1>
+        <button onclick="logout()">Logout</button>
+    </div>
 
-<div id="bookings">
-Loading bookings...
+    <div id="bookings">
+        Loading bookings...
+    </div>
+
 </div>
 
 <script>
 
+const API = "https://millie-dav.onrender.com";
 const token = localStorage.getItem("token");
 
-if(!token){
+// protect route
+if (!token) {
     window.location.href = "login.html";
 }
 
-async function loadBookings(){
+// load bookings
+async function loadBookings() {
 
-    try{
+    try {
 
-        const res = await fetch(
-            "https://millie-dav.onrender.com/bookings",
-            {
-                headers:{
-                    Authorization:`Bearer ${token}`
-                }
+        const res = await fetch(`${API}/bookings`, {
+            headers: {
+                Authorization: "Bearer " + token
             }
-        );
+        });
 
-        const bookings = await res.json();
+        const data = await res.json();
 
         const container = document.getElementById("bookings");
 
-        if(bookings.length === 0){
-            container.innerHTML = "<p>No bookings found.</p>";
+        container.innerHTML = "";
+
+        if (!data.length) {
+            container.innerHTML = "<p>No bookings yet.</p>";
             return;
         }
 
-        container.innerHTML = "";
-
-        bookings.forEach(booking => {
+        data.forEach(b => {
 
             container.innerHTML += `
-                <div class="booking">
+                <div class="card">
+                    <h3>${b.name}</h3>
+                    <p><b>Email:</b> ${b.email}</p>
+                    <p><b>Service:</b> ${b.service}</p>
+                    <p><b>Message:</b> ${b.message}</p>
 
-                    <h3>${booking.name}</h3>
-
-                    <p><strong>Email:</strong>
-                    ${booking.email}</p>
-
-                    <p><strong>Service:</strong>
-                    ${booking.service}</p>
-
-                    <p><strong>Message:</strong>
-                    ${booking.message}</p>
-
-                    <button onclick="deleteBooking('${booking._id}')">
-                        Delete
-                    </button>
-
+                    <div class="actions">
+                        <button class="delete" onclick="deleteBooking('${b._id}')">
+                            Delete
+                        </button>
+                    </div>
                 </div>
             `;
-
         });
 
-    }catch(err){
-
+    } catch (err) {
         document.getElementById("bookings").innerHTML =
-        "Failed to load bookings.";
-
+            "Failed to load bookings.";
     }
 }
 
-async function deleteBooking(id){
+// delete booking
+async function deleteBooking(id) {
 
-    if(!confirm("Delete booking?")){
-        return;
-    }
+    const confirmDelete = confirm("Delete this booking?");
 
-    await fetch(
-        `https://millie-dav.onrender.com/bookings/${id}`,
-        {
-            method:"DELETE",
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
+    if (!confirmDelete) return;
+
+    await fetch(`${API}/bookings/${id}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: "Bearer " + token
         }
-    );
+    });
 
-    loadBookings();
+    loadBookings(); // refresh
 }
 
-function logout(){
-
+// logout
+function logout() {
     localStorage.removeItem("token");
-
-    window.location.href="login.html";
-
+    window.location.href = "login.html";
 }
 
 loadBookings();
