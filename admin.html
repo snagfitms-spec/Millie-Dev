@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MillieDev Admin Dashboard - Layer 2</title>
 
-<title>MillieDev Admin Dashboard</title>
-
-<!-- Chart.js (for revenue chart later) -->
+<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
@@ -15,7 +14,6 @@
 :root {
     --bg: #0a0f1f;
     --panel: #111a2e;
-    --panel-2: #0f1629;
     --text: #ffffff;
     --muted: #94a3b8;
 
@@ -23,7 +21,6 @@
     --green: #22C55E;
     --orange: #F59E0B;
     --pink: #FF4FD8;
-    --purple: #8B5CF6;
 }
 
 /* ================= BASE ================= */
@@ -32,7 +29,6 @@ body {
     font-family: Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
-    overflow-x: hidden;
 }
 
 /* ================= TOPBAR ================= */
@@ -41,10 +37,9 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background: var(--panel-2);
+    background: #0f1629;
     position: sticky;
     top: 0;
-    z-index: 10;
 }
 
 .logo {
@@ -52,53 +47,11 @@ body {
     color: var(--blue);
 }
 
-/* desktop menu */
-.menu {
-    display: flex;
-    gap: 15px;
-}
-
 .menu a {
     color: var(--muted);
+    margin-left: 15px;
     text-decoration: none;
     font-size: 14px;
-}
-
-.menu a:hover {
-    color: white;
-}
-
-/* ================= HAMBURGER ================= */
-.hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.hamburger span {
-    width: 25px;
-    height: 2px;
-    background: white;
-    margin: 4px 0;
-}
-
-/* mobile menu */
-.mobile-menu {
-    display: none;
-    flex-direction: column;
-    background: var(--panel);
-    position: absolute;
-    top: 60px;
-    right: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.mobile-menu a {
-    color: var(--text);
-    padding: 8px;
-    text-decoration: none;
 }
 
 /* ================= STATS ================= */
@@ -111,26 +64,82 @@ body {
 
 .card {
     background: var(--panel);
+    padding: 14px;
+    border-radius: 12px;
+}
+
+.icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.blue { background: var(--blue); }
+.green { background: var(--green); }
+.orange { background: var(--orange); }
+.pink { background: var(--pink); }
+
+/* ================= REVENUE SECTION ================= */
+.revenue-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 15px;
+}
+
+/* LEFT - BARS */
+.bars {
+    background: var(--panel);
     padding: 15px;
     border-radius: 12px;
 }
 
-/* ICON SYSTEM (IMPORTANT FOR YOUR COLORS) */
-.icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    margin-bottom: 10px;
+.bar {
+    margin-bottom: 14px;
 }
 
-/* exact mapping you requested */
-.icon.blue { background: var(--blue); }
-.icon.green { background: var(--green); }
-.icon.pink { background: var(--pink); }
-.icon.orange { background: var(--orange); }
-.icon.purple { background: var(--purple); }
+.bar-title {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: var(--muted);
+}
 
-/* ================= GRID ================= */
+.track {
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.fill {
+    height: 6px;
+    border-radius: 10px;
+}
+
+/* RIGHT - DONUT */
+.donut-box {
+    background: var(--panel);
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+}
+
+.center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.center-text h2 {
+    margin: 0;
+    color: var(--blue);
+}
+
+/* ================= BOOKINGS ================= */
 .grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -144,69 +153,6 @@ body {
     border-radius: 12px;
 }
 
-/* ================= BOOKINGS ================= */
-.booking {
-    background: var(--panel-2);
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    border-left: 3px solid var(--blue);
-}
-
-/* service tags (dynamic color system) */
-.service {
-    font-size: 12px;
-    padding: 4px 8px;
-    border-radius: 6px;
-    display: inline-block;
-}
-
-.service.ecommerce { color: var(--blue); }
-.service.web { color: var(--green); }
-.service.landing { color: var(--orange); }
-.service.custom { color: var(--pink); }
-
-/* ================= REVENUE CHART AREA ================= */
-.chart-container {
-    width: 100%;
-    max-width: 280px;
-    margin: auto;
-    position: relative;
-}
-
-.center-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: bold;
-    text-align: center;
-}
-
-/* ================= BOTTOM ================= */
-.bottom {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    padding: 15px;
-}
-
-.box {
-    background: var(--panel);
-    padding: 15px;
-    border-radius: 12px;
-}
-
-/* ================= BUTTON ================= */
-button {
-    background: var(--blue);
-    border: none;
-    padding: 8px;
-    border-radius: 8px;
-    cursor: pointer;
-    color: white;
-}
-
 /* ================= MOBILE ================= */
 @media (max-width: 900px) {
 
@@ -214,20 +160,12 @@ button {
         grid-template-columns: 1fr 1fr;
     }
 
+    .revenue-wrapper {
+        grid-template-columns: 1fr;
+    }
+
     .grid {
         grid-template-columns: 1fr;
-    }
-
-    .bottom {
-        grid-template-columns: 1fr;
-    }
-
-    .menu {
-        display: none;
-    }
-
-    .hamburger {
-        display: flex;
     }
 }
 
@@ -238,32 +176,14 @@ button {
 
 <!-- TOPBAR -->
 <div class="topbar">
-
     <div class="logo">MillieDev Admin</div>
 
     <div class="menu">
         <a href="#">Dashboard</a>
         <a href="#">Bookings</a>
-        <a href="#">Messages</a>
         <a href="#">Analytics</a>
         <a href="#">Settings</a>
     </div>
-
-    <!-- hamburger -->
-    <div class="hamburger" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#">Dashboard</a>
-        <a href="#">Bookings</a>
-        <a href="#">Messages</a>
-        <a href="#">Analytics</a>
-        <a href="#">Settings</a>
-    </div>
-
 </div>
 
 <!-- STATS -->
@@ -276,146 +196,96 @@ button {
     </div>
 
     <div class="card">
-        <div class="icon purple"></div>
+        <div class="icon pink"></div>
         <h3>Users</h3>
         <p>102</p>
     </div>
 
     <div class="card">
-        <div class="icon pink"></div>
+        <div class="icon green"></div>
         <h3>Revenue</h3>
         <p>$24,780</p>
     </div>
 
     <div class="card">
-        <div class="icon green"></div>
+        <div class="icon orange"></div>
         <h3>Services</h3>
         <p>4</p>
     </div>
 
 </div>
 
-<!-- MAIN -->
-<div class="grid">
+<!-- REVENUE SECTION (MAIN FIX) -->
+<div class="revenue-wrapper">
 
-    <!-- BOOKINGS -->
-    <div class="panel">
-        <h3>Recent Bookings</h3>
-        <div id="cards"></div>
+    <!-- LEFT: BARS -->
+    <div class="bars">
+
+        <h3>Service Performance</h3>
+
+        <div class="bar">
+            <div class="bar-title">Web Design</div>
+            <div class="track"><div class="fill green" style="width:75%"></div></div>
+        </div>
+
+        <div class="bar">
+            <div class="bar-title">E-commerce</div>
+            <div class="track"><div class="fill blue" style="width:60%"></div></div>
+        </div>
+
+        <div class="bar">
+            <div class="bar-title">Landing Pages</div>
+            <div class="track"><div class="fill orange" style="width:45%"></div></div>
+        </div>
+
+        <div class="bar">
+            <div class="bar-title">Custom Systems</div>
+            <div class="track"><div class="fill pink" style="width:80%"></div></div>
+        </div>
+
     </div>
 
-    <!-- REVENUE CHART -->
-    <div class="panel">
-        <h3>Revenue Overview</h3>
+    <!-- RIGHT: DONUT -->
+    <div class="donut-box">
 
-        <div class="chart-container">
-            <canvas id="revenueChart"></canvas>
+        <canvas id="revenueChart"></canvas>
 
-            <div class="center-text">
-                $24,780
-            </div>
+        <div class="center-text">
+            <h2>$24,780</h2>
+            <p style="color:var(--muted); font-size:12px;">Total Revenue</p>
         </div>
 
     </div>
 
 </div>
 
-<!-- BOTTOM -->
-<div class="bottom">
+<!-- BOOKINGS -->
+<div class="grid">
 
-    <div class="box">
-        <h3>Messages</h3>
-        <p>No new messages</p>
+    <div class="panel">
+        <h3>Recent Bookings</h3>
+        <div id="cards"></div>
     </div>
 
-    <div class="box">
-        <h3>Notifications</h3>
-        <p>System active</p>
-    </div>
-
-    <div class="box">
-        <h3>Quick Actions</h3>
-        <p>Add service / send alert / manage users</p>
+    <div class="panel">
+        <h3>Booking Trend</h3>
+        <p style="opacity:0.6;">(Next upgrade: live chart / trading style graph)</p>
     </div>
 
 </div>
 
 <script>
 
-const API_URL = "https://millie-dav.onrender.com";
-
-/* ================= MOBILE MENU ================= */
-function toggleMenu() {
-    document.getElementById("mobileMenu").classList.toggle("show");
-}
-
-/* ================= BOOKINGS ================= */
-async function loadBookings() {
-
-    try {
-        const token = localStorage.getItem("token");
-
-        const res = await fetch(`${API_URL}/bookings`, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        });
-
-        const data = await res.json();
-
-        const container = document.getElementById("cards");
-        container.innerHTML = "";
-
-        data.forEach(b => {
-
-            const div = document.createElement("div");
-            div.classList.add("booking");
-
-            div.innerHTML = `
-                <h4>${b.name}</h4>
-                <p>${b.email}</p>
-                <span class="service ${b.service}">${b.service || "general"}</span>
-                <p>${b.message}</p>
-                <button onclick="deleteBooking('${b._id}')">Delete</button>
-            `;
-
-            container.appendChild(div);
-        });
-
-    } catch (err) {
-        console.log(err);
-    }
-}
-
-async function deleteBooking(id) {
-
-    const token = localStorage.getItem("token");
-
-    await fetch(`${API_URL}/bookings/${id}`, {
-        method: "DELETE",
-        headers: {
-            "Authorization": "Bearer " + token
-        }
-    });
-
-    loadBookings();
-}
-
-/* ================= REVENUE CHART ================= */
+/* ================= CHART ================= */
 const ctx = document.getElementById("revenueChart");
 
-const revenueChart = new Chart(ctx, {
+new Chart(ctx, {
     type: "doughnut",
     data: {
-        labels: ["E-commerce", "Web Design", "Landing Pages", "Custom"],
+        labels: ["Web Design", "E-commerce", "Landing Pages", "Custom"],
         datasets: [{
-            data: [40, 25, 20, 15],
-            backgroundColor: [
-                "#38BDF8",
-                "#22C55E",
-                "#F59E0B",
-                "#FF4FD8"
-            ],
+            data: [75, 60, 45, 80],
+            backgroundColor: ["#22C55E", "#38BDF8", "#F59E0B", "#FF4FD8"],
             borderWidth: 0
         }]
     },
@@ -428,9 +298,6 @@ const revenueChart = new Chart(ctx, {
         }
     }
 });
-
-/* INIT */
-loadBookings();
 
 </script>
 
