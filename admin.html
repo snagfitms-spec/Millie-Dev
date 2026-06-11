@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 <title>MillieDev Admin Dashboard</title>
+
+<!-- Chart.js (for revenue chart later) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 
@@ -11,6 +15,7 @@
 :root {
     --bg: #0a0f1f;
     --panel: #111a2e;
+    --panel-2: #0f1629;
     --text: #ffffff;
     --muted: #94a3b8;
 
@@ -18,6 +23,7 @@
     --green: #22C55E;
     --orange: #F59E0B;
     --pink: #FF4FD8;
+    --purple: #8B5CF6;
 }
 
 /* ================= BASE ================= */
@@ -26,6 +32,7 @@ body {
     font-family: Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
+    overflow-x: hidden;
 }
 
 /* ================= TOPBAR ================= */
@@ -34,9 +41,10 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background: #0f1629;
+    background: var(--panel-2);
     position: sticky;
     top: 0;
+    z-index: 10;
 }
 
 .logo {
@@ -44,15 +52,53 @@ body {
     color: var(--blue);
 }
 
+/* desktop menu */
+.menu {
+    display: flex;
+    gap: 15px;
+}
+
 .menu a {
     color: var(--muted);
-    margin-left: 15px;
     text-decoration: none;
     font-size: 14px;
 }
 
 .menu a:hover {
     color: white;
+}
+
+/* ================= HAMBURGER ================= */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 2px;
+    background: white;
+    margin: 4px 0;
+}
+
+/* mobile menu */
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: var(--panel);
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.mobile-menu a {
+    color: var(--text);
+    padding: 8px;
+    text-decoration: none;
 }
 
 /* ================= STATS ================= */
@@ -65,25 +111,24 @@ body {
 
 .card {
     background: var(--panel);
-    padding: 14px;
+    padding: 15px;
     border-radius: 12px;
 }
 
+/* ICON SYSTEM (IMPORTANT FOR YOUR COLORS) */
 .icon {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 10px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
-.blue { background: var(--blue); }
-.green { background: var(--green); }
-.orange { background: var(--orange); }
-.pink { background: var(--pink); }
-
-.card h3 {
-    margin: 0;
-}
+/* exact mapping you requested */
+.icon.blue { background: var(--blue); }
+.icon.green { background: var(--green); }
+.icon.pink { background: var(--pink); }
+.icon.orange { background: var(--orange); }
+.icon.purple { background: var(--purple); }
 
 /* ================= GRID ================= */
 .grid {
@@ -101,38 +146,41 @@ body {
 
 /* ================= BOOKINGS ================= */
 .booking {
-    background: #0f1629;
+    background: var(--panel-2);
     padding: 12px;
     border-radius: 10px;
     margin-bottom: 10px;
+    border-left: 3px solid var(--blue);
 }
 
+/* service tags (dynamic color system) */
 .service {
     font-size: 12px;
     padding: 4px 8px;
     border-radius: 6px;
+    display: inline-block;
 }
 
-/* service colors */
 .service.ecommerce { color: var(--blue); }
 .service.web { color: var(--green); }
 .service.landing { color: var(--orange); }
 .service.custom { color: var(--pink); }
 
-/* ================= ANALYTICS ================= */
-.bar {
-    margin: 10px 0;
+/* ================= REVENUE CHART AREA ================= */
+.chart-container {
+    width: 100%;
+    max-width: 280px;
+    margin: auto;
+    position: relative;
 }
 
-.track {
-    height: 6px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 10px;
-}
-
-.fill {
-    height: 6px;
-    border-radius: 10px;
+.center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    text-align: center;
 }
 
 /* ================= BOTTOM ================= */
@@ -161,6 +209,7 @@ button {
 
 /* ================= MOBILE ================= */
 @media (max-width: 900px) {
+
     .stats {
         grid-template-columns: 1fr 1fr;
     }
@@ -176,6 +225,10 @@ button {
     .menu {
         display: none;
     }
+
+    .hamburger {
+        display: flex;
+    }
 }
 
 </style>
@@ -183,8 +236,9 @@ button {
 
 <body>
 
-<!-- TOP -->
+<!-- TOPBAR -->
 <div class="topbar">
+
     <div class="logo">MillieDev Admin</div>
 
     <div class="menu">
@@ -194,6 +248,22 @@ button {
         <a href="#">Analytics</a>
         <a href="#">Settings</a>
     </div>
+
+    <!-- hamburger -->
+    <div class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#">Dashboard</a>
+        <a href="#">Bookings</a>
+        <a href="#">Messages</a>
+        <a href="#">Analytics</a>
+        <a href="#">Settings</a>
+    </div>
+
 </div>
 
 <!-- STATS -->
@@ -206,19 +276,19 @@ button {
     </div>
 
     <div class="card">
-        <div class="icon pink"></div>
+        <div class="icon purple"></div>
         <h3>Users</h3>
         <p>102</p>
     </div>
 
     <div class="card">
-        <div class="icon green"></div>
-        <h3>Conversion</h3>
-        <p>68%</p>
+        <div class="icon pink"></div>
+        <h3>Revenue</h3>
+        <p>$24,780</p>
     </div>
 
     <div class="card">
-        <div class="icon orange"></div>
+        <div class="icon green"></div>
         <h3>Services</h3>
         <p>4</p>
     </div>
@@ -234,31 +304,20 @@ button {
         <div id="cards"></div>
     </div>
 
-    <!-- ANALYTICS -->
+    <!-- REVENUE CHART -->
     <div class="panel">
-        <h3>Top Services Performance</h3>
+        <h3>Revenue Overview</h3>
 
-        <div class="bar">
-            <small>Web Design</small>
-            <div class="track"><div class="fill green" style="width:75%"></div></div>
-        </div>
+        <div class="chart-container">
+            <canvas id="revenueChart"></canvas>
 
-        <div class="bar">
-            <small>E-commerce</small>
-            <div class="track"><div class="fill blue" style="width:60%"></div></div>
-        </div>
-
-        <div class="bar">
-            <small>Landing Pages</small>
-            <div class="track"><div class="fill orange" style="width:45%"></div></div>
-        </div>
-
-        <div class="bar">
-            <small>Custom Systems</small>
-            <div class="track"><div class="fill pink" style="width:80%"></div></div>
+            <div class="center-text">
+                $24,780
+            </div>
         </div>
 
     </div>
+
 </div>
 
 <!-- BOTTOM -->
@@ -271,25 +330,29 @@ button {
 
     <div class="box">
         <h3>Notifications</h3>
-        <p>System stable</p>
+        <p>System active</p>
     </div>
 
     <div class="box">
         <h3>Quick Actions</h3>
-        <p>Add service / send update / manage users</p>
+        <p>Add service / send alert / manage users</p>
     </div>
 
 </div>
 
-<!-- SCRIPT -->
 <script>
 
 const API_URL = "https://millie-dav.onrender.com";
 
+/* ================= MOBILE MENU ================= */
+function toggleMenu() {
+    document.getElementById("mobileMenu").classList.toggle("show");
+}
+
+/* ================= BOOKINGS ================= */
 async function loadBookings() {
 
     try {
-
         const token = localStorage.getItem("token");
 
         const res = await fetch(`${API_URL}/bookings`, {
@@ -311,13 +374,8 @@ async function loadBookings() {
             div.innerHTML = `
                 <h4>${b.name}</h4>
                 <p>${b.email}</p>
-
-                <span class="service ${b.service}">
-                    ${b.service || "general"}
-                </span>
-
+                <span class="service ${b.service}">${b.service || "general"}</span>
                 <p>${b.message}</p>
-
                 <button onclick="deleteBooking('${b._id}')">Delete</button>
             `;
 
@@ -343,6 +401,35 @@ async function deleteBooking(id) {
     loadBookings();
 }
 
+/* ================= REVENUE CHART ================= */
+const ctx = document.getElementById("revenueChart");
+
+const revenueChart = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+        labels: ["E-commerce", "Web Design", "Landing Pages", "Custom"],
+        datasets: [{
+            data: [40, 25, 20, 15],
+            backgroundColor: [
+                "#38BDF8",
+                "#22C55E",
+                "#F59E0B",
+                "#FF4FD8"
+            ],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        cutout: "70%",
+        plugins: {
+            legend: {
+                display: false
+            }
+        }
+    }
+});
+
+/* INIT */
 loadBookings();
 
 </script>
