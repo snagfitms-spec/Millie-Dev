@@ -3,165 +3,268 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard | MillieDev</title>
+<title>MillieDev Admin Dashboard</title>
 
 <style>
+
+/* ================= GLOBAL ================= */
 body {
-    font-family: Arial, sans-serif;
-    background: #070A12;
-    color: white;
     margin: 0;
-    padding: 20px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #0a0f1f;
+    color: #fff;
+    display: flex;
 }
 
-.header {
+/* ================= SIDEBAR ================= */
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background: #0f1629;
+    padding: 25px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #6C63FF;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+.nav a {
+    display: block;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #aaa;
+    transition: 0.3s;
+}
+
+.nav a:hover {
+    background: rgba(108,99,255,0.15);
+    color: #fff;
+    transform: translateX(3px);
+}
+
+/* ================= MAIN ================= */
+.main {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+}
+
+/* ================= TOPBAR ================= */
+.topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    padding: 20px 25px;
+    background: #0f1629;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-h1 {
+.topbar h2 {
     margin: 0;
+    font-size: 18px;
 }
 
-button {
-    background: #6C63FF;
-    border: none;
-    padding: 10px 15px;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.container {
-    max-width: 900px;
-    margin: auto;
-}
-
-.card {
-    background: #11182a;
-    padding: 15px;
+.search {
+    padding: 10px;
+    width: 260px;
     border-radius: 10px;
-    margin-bottom: 15px;
+    border: none;
+    background: #111a2e;
+    color: #fff;
+    outline: none;
 }
 
-.card h3 {
+/* ================= STATS ================= */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    padding: 25px;
+}
+
+.stat {
+    background: linear-gradient(145deg, #111a2e, #0f1629);
+    padding: 18px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: 0.3s;
+}
+
+.stat:hover {
+    transform: translateY(-3px);
+}
+
+.stat h3 {
     margin: 0;
+    font-size: 22px;
+    color: #6C63FF;
 }
 
-.card p {
-    margin: 5px 0;
-    opacity: 0.9;
+/* ================= GRID ================= */
+.grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+    padding: 0 25px 25px;
 }
 
-.actions {
+/* ================= PANELS ================= */
+.panel {
+    background: linear-gradient(145deg, #111a2e, #0f1629);
+    padding: 18px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* ================= BOOKING CARD (PREMIUM INBOX STYLE) ================= */
+.booking {
+    background: #0e1527;
+    padding: 14px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border-left: 3px solid #6C63FF;
+    transition: 0.3s;
+}
+
+.booking:hover {
+    transform: scale(1.01);
+    background: #101a31;
+}
+
+.booking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.email {
+    font-size: 12px;
+    color: #aaa;
+}
+
+.service {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    background: rgba(108,99,255,0.2);
+    color: #6C63FF;
+}
+
+.message {
     margin-top: 10px;
+    font-size: 13px;
+    color: #ccc;
+    line-height: 1.4;
 }
 
-.delete {
+/* ================= BUTTON ================= */
+.btn {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
     background: #ef4444;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+    transition: 0.3s;
 }
+
+.btn:hover {
+    background: #ff2d2d;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- ================= SIDEBAR ================= -->
+<div class="sidebar">
 
-    <div class="header">
-        <h1>Admin Dashboard</h1>
-        <button onclick="logout()">Logout</button>
-    </div>
+    <div class="logo">MillieDev</div>
 
-    <div id="bookings">
-        Loading bookings...
+    <div class="nav">
+        <a href="#">Dashboard</a>
+        <a href="#">Bookings</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Analytics</a>
+        <a href="#">Settings</a>
     </div>
 
 </div>
 
-<script>
+<!-- ================= MAIN ================= -->
+<div class="main">
 
-const API = "https://millie-dav.onrender.com";
-const token = localStorage.getItem("token");
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <h2>Dashboard Overview</h2>
+        <input class="search" placeholder="Search bookings...">
+    </div>
 
-// protect route
-if (!token) {
-    window.location.href = "login.html";
-}
+    <!-- STATS -->
+    <div class="stats">
 
-// load bookings
-async function loadBookings() {
+        <div class="stat">
+            <h3>156</h3>
+            <p>Total Bookings</p>
+        </div>
 
-    try {
+        <div class="stat">
+            <h3>28</h3>
+            <p>New This Week</p>
+        </div>
 
-        const res = await fetch(`${API}/bookings`, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        });
+        <div class="stat">
+            <h3>102</h3>
+            <p>Clients</p>
+        </div>
 
-        const data = await res.json();
+        <div class="stat">
+            <h3>68%</h3>
+            <p>Conversion Rate</p>
+        </div>
 
-        const container = document.getElementById("bookings");
+    </div>
 
-        container.innerHTML = "";
+    <!-- GRID -->
+    <div class="grid">
 
-        if (!data.length) {
-            container.innerHTML = "<p>No bookings yet.</p>";
-            return;
-        }
+        <!-- BOOKINGS -->
+        <div class="panel">
+            <h3>Recent Bookings</h3>
+            <div id="cards"></div>
+        </div>
 
-        data.forEach(b => {
+        <!-- SIDE -->
+        <div class="panel">
+            <h3>Analytics</h3>
+            <p style="opacity:0.6;">Charts coming soon</p>
 
-            container.innerHTML += `
-                <div class="card">
-                    <h3>${b.name}</h3>
-                    <p><b>Email:</b> ${b.email}</p>
-                    <p><b>Service:</b> ${b.service}</p>
-                    <p><b>Message:</b> ${b.message}</p>
+            <h3 style="margin-top:20px;">Top Services</h3>
+            <p style="opacity:0.6;">Breakdown coming soon</p>
+        </div>
 
-                    <div class="actions">
-                        <button class="delete" onclick="deleteBooking('${b._id}')">
-                            Delete
-                        </button>
-                    </div>
-                </div>
-            `;
-        });
+    </div>
 
-    } catch (err) {
-        document.getElementById("bookings").innerHTML =
-            "Failed to load bookings.";
-    }
-}
-
-// delete booking
-async function deleteBooking(id) {
-
-    const confirmDelete = confirm("Delete this booking?");
-
-    if (!confirmDelete) return;
-
-    await fetch(`${API}/bookings/${id}`, {
-        method: "DELETE",
-        headers: {
-            Authorization: "Bearer " + token
-        }
-    });
-
-    loadBookings(); // refresh
-}
-
-// logout
-function logout() {
-    localStorage.removeItem("token");
-    window.location.href = "login.html";
-}
-
-loadBookings();
-
-</script>
+</div>
 
 </body>
 </html>
