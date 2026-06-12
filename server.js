@@ -19,6 +19,19 @@ const io = new Server(server, {
 app.use(express.json());
 app.use(cors());
 
+// Fetch the list of bookings once when page loads
+fetch("https://millie-dav.onrender.com/bookings")
+    .then(res => res.json())
+    .then(data => {
+        const list = document.getElementById("booking-list");
+        list.innerHTML = data.map(b => `
+            <div class="booking-card">
+                <strong>${b.name}</strong> - ${b.service}<br>
+                <small>${b.message}</small>
+            </div>
+        `).join('');
+    });
+
 /* ================= DATABASE ================= */
 const mongoURI = process.env.MONGO_URI;
 mongoose.connect(mongoURI)
