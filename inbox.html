@@ -3,40 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MillieDev - Live Bookings</title>
-    <!-- vConsole for debugging -->
+    <title>MillieDev - Admin Dashboard</title>
+    <!-- Debugging Console -->
     <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
     <script>var vConsole = new VConsole();</script>
     <style>
         body { background: #0f172a; color: white; font-family: sans-serif; padding: 20px; }
-        .message-card { background: #1e293b; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #60a5fa; }
-        .sender { font-weight: bold; color: #60a5fa; font-size: 1.1em; }
+        .stats-box { background: #1e293b; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #334155; }
+        .booking-card { background: #334155; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #60a5fa; }
+        h2 { color: #60a5fa; }
     </style>
 </head>
 <body>
-    <h2>Live Bookings Inbox</h2>
-    <div id="inbox-container">
-        <p>Waiting for new bookings...</p>
+    <h2>Admin Dashboard</h2>
+    
+    <!-- Real-Time Stats Section -->
+    <div id="stats" class="stats-box">
+        <p>Loading stats...</p>
     </div>
 
-    <!-- Connects to your Render server socket -->
+    <!-- Individual Bookings Section -->
+    <div id="booking-list">
+        <p>Loading bookings...</p>
+    </div>
+
     <script src="https://millie-dav.onrender.com/socket.io/socket.io.js"></script>
     <script>
         const socket = io("https://millie-dav.onrender.com");
-        const container = document.getElementById('inbox-container');
+        const statsDiv = document.getElementById('stats');
+        const listDiv = document.getElementById('booking-list');
 
-        socket.on('newBooking', (data) => {
-            console.log("New booking arrived:", data);
-            const card = document.createElement('div');
-            card.className = 'message-card';
-            card.innerHTML = `
-                <div class="sender">${data.name}</div>
-                <p><strong>Service:</strong> ${data.service}</p>
-                <p><strong>Email:</strong> ${data.email}</p>
-                <p><strong>Project:</strong> ${data.description}</p>
+        // 1. Listen for Real-Time Updates (Stats)
+        socket.on("dashboard:update", (data) => {
+            statsDiv.innerHTML = `
+                <h3>Total Bookings: ${data.totalBookings}</h3>
+                <p>Total Revenue: $${data.totalRevenue}</p>
             `;
-            container.prepend(card);
         });
+
+        // 2. Fetch the List of Bookings once on load
+        async function fetchBookings() {
+            try {
+                const res = await fetch("https://millie-dav.onrender.com/bookings");
+                const data = await res.json();
+                listDiv.innerHTML = data.map(b => `
+                    <div class="booking-card">
+                        <strong>Client: ${b.name}</strong><br>
+                        Service: ${b.service}<br>
+                        <small>Message: ${b.message}</small>
+                    </div>
+                `).join('');
+            } catch (err) {
+                listDiv.innerHTML = `<p>Error loading bookings.</p>`;
+            }
+        }
+
+        fetchBookings();
     </script>
 </body>
 </html>
