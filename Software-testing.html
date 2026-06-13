@@ -1,1 +1,190 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Software Architecture & Testing | MillieDev</title><link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json"><style>
 
+/* =========================
+SOFTWARE TESTING IDENTITY (ENGINEERING MODE)
+========================= */
+
+.test-hero{
+position:relative;
+overflow:hidden;
+}
+
+.test-hero::before{
+content:"";
+position:absolute;
+top:-200px;
+left:50%;
+transform:translateX(-50%);
+width:900px;
+height:900px;
+background:radial-gradient(
+circle,
+rgba(34,197,94,.18),
+transparent 60%
+);
+pointer-events:none;
+}
+
+.engine-glow{
+box-shadow:
+0 0 40px rgba(34,197,94,.15),
+0 0 80px rgba(245,158,11,.08);
+}
+
+/* FLOW SYSTEM */
+.flow{
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:15px;
+padding:20px;
+border:1px solid var(--border);
+border-radius:16px;
+background:rgba(255,255,255,.02);
+}
+
+.flow span{
+padding:10px 15px;
+border-radius:12px;
+background:rgba(34,197,94,.08);
+border:1px solid rgba(34,197,94,.15);
+font-size:.9rem;
+}
+
+/* SHOWCASE GRID */
+.showcase-grid{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:20px;
+margin-top:40px;
+}
+
+.showcase-grid.reverse{
+grid-template-columns:1fr 2fr;
+}
+
+.box{
+height:280px;
+border-radius:18px;
+background:rgba(255,255,255,.03);
+border:1px solid var(--border);
+}
+
+/* TEST CARDS */
+.test-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+margin-top:40px;
+}
+
+.test-card{
+background:#0f172a;
+border:1px solid var(--border);
+border-radius:16px;
+padding:20px;
+transition:.3s;
+}
+
+.test-card:hover{
+transform:translateY(-5px);
+border-color:rgba(34,197,94,.4);
+box-shadow:0 10px 25px rgba(34,197,94,.1);
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+
+.showcase-grid,
+.showcase-grid.reverse{
+grid-template-columns:1fr;
+}
+
+.test-grid{
+grid-template-columns:1fr;
+}
+
+}
+
+</style></head><body><!-- NAVBAR --><nav class="navbar"><div class="logo">MillieDev</div><div class="menu-btn" onclick="toggleMenu()">
+<span></span>
+<span></span>
+<span></span>
+</div><div class="menu-container" id="menu">
+<a href="index.html" onclick="closeMenu()">Home</a>
+<a href="services.html" onclick="closeMenu()">Services</a>
+<a href="portfolio.html" onclick="closeMenu()">Portfolio</a>
+<a href="about.html" onclick="closeMenu()">About</a>
+<a href="booking.html" onclick="closeMenu()">Booking</a>
+</div></nav><!-- HERO --><section class="test-hero" style="text-align:center; padding:120px 5%;"><h1 style="font-size:3rem;">
+Software Architecture & Testing Systems
+</h1><p style="max-width:800px; margin:20px auto; opacity:.8;">Every system is only as strong as its validation.
+This project focuses on testing performance, stability, API integrity,
+and real-world system behavior under load.
+
+</p><a href="#process">
+<button>
+View Testing Process
+</button>
+</a></section><!-- PROCESS --><section id="process" style="padding:80px 5%; max-width:1000px; margin:auto;"><h2>Testing Pipeline</h2><p style="opacity:.8; margin-top:20px; line-height:1.8;">Before any system is considered production-ready, it must pass
+a structured validation process that ensures reliability and
+predictable behavior under real-world conditions.
+
+</p><div class="flow engine-glow" style="margin-top:30px;"><span>Request</span>
+<span>API Validation</span>
+<span>Load Testing</span>
+<span>Error Handling</span>
+<span>Report</span>
+
+</div></section><!-- SHOWCASE 1 --><section style="padding:0 5%;"><div class="showcase-grid"><div class="box engine-glow"></div><div><h2>API Stability</h2><p style="margin-top:15px; opacity:.8; line-height:1.8;">Every endpoint is tested for reliability, response time,
+and data accuracy under different usage conditions.
+
+</p></div></div></section><!-- SHOWCASE 2 --><section style="padding:80px 5%;"><div class="showcase-grid reverse"><div><h2>Performance Under Load</h2><p style="margin-top:15px; opacity:.8; line-height:1.8;">Systems are tested under simulated traffic to ensure they
+remain stable even during peak usage.
+
+</p></div><div class="box engine-glow"></div></div></section><!-- TEST AREAS --><section style="padding:80px 5%;"><h2 style="text-align:center;">
+Core Testing Areas
+</h2><div class="test-grid"><div class="test-card">
+<h3>API Testing</h3>
+<p>Validate endpoints and responses.</p>
+</div><div class="test-card">
+<h3>Load Testing</h3>
+<p>Simulate high traffic conditions.</p>
+</div><div class="test-card">
+<h3>Security Checks</h3>
+<p>Detect vulnerabilities early.</p>
+</div><div class="test-card">
+<h3>Performance</h3>
+<p>Measure system efficiency.</p>
+</div></div></section><!-- SCREENSHOT AREA --><section style="padding:80px 5%;"><h2 style="text-align:center;">
+Testing Dashboard
+</h2><div class="showcase-grid" style="margin-top:40px;"><div class="box"></div>
+<div class="box"></div></div><div class="showcase-grid reverse"><div class="box"></div>
+<div class="box"></div></div></section><!-- CLOSING --><section style="text-align:center; padding:100px 5%;"><h2>
+Engineering Is About Trust
+</h2><p style="max-width:850px; margin:25px auto; opacity:.8; line-height:1.9;">Before a product reaches users, it must survive failure.
+Testing is not a phase — it is a guarantee of reliability.
+
+</p><a href="booking.html">
+<button>
+Request System Testing
+</button>
+</a></section><footer style="text-align:center; padding:40px; opacity:.6;">
+© 2026 MillieDev Testing Systems
+</footer><script>
+
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("active");
+}
+
+function closeMenu(){
+document.getElementById("menu").classList.remove("active");
+}
+
+</script></body>
+  </html>
