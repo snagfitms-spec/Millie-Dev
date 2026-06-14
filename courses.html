@@ -12,29 +12,31 @@
 <style>
 /* ================= LEVEL 10 COURSE SYSTEM ================= */
 
-/* COURSE COLOR TOKENS */
 :root{
-    --html: #38BDF8;
-    --js: #FACC15;
-    --stack: #A855F7;
-    --responsive: #22C55E;
-    --deploy: #F97316;
-    --freelance: #EC4899;
+    --html:#38BDF8;
+    --js:#FACC15;
+    --stack:#A855F7;
+    --responsive:#22C55E;
+    --deploy:#F97316;
+    --freelance:#EC4899;
 }
 
-/* HERO TEXT ENHANCEMENT */
+/* HERO */
 .course-hero h1{
     background: linear-gradient(90deg, var(--primary), var(--accent));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-/* PREMIUM CARD UPGRADE */
+/* COURSE CARDS */
 .course-card{
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s ease;
-    cursor: pointer;
+    position:relative;
+    overflow:hidden;
+    cursor:pointer;
+    transition:0.4s ease;
+    opacity:0;
+    transform:translateY(30px);
+    animation:popIn 0.8s forwards;
 }
 
 .course-card::before{
@@ -44,45 +46,34 @@
     left:0;
     width:4px;
     height:100%;
-    background: var(--primary);
+    background:var(--primary);
 }
 
-/* COLOR VARIANTS */
-.html::before{ background: var(--html); }
-.js::before{ background: var(--js); }
-.stack::before{ background: var(--stack); }
-.responsive::before{ background: var(--responsive); }
-.deploy::before{ background: var(--deploy); }
-.freelance::before{ background: var(--freelance); }
+/* COLORS */
+.html::before{background:var(--html);}
+.js::before{background:var(--js);}
+.stack::before{background:var(--stack);}
+.responsive::before{background:var(--responsive);}
+.deploy::before{background:var(--deploy);}
+.freelance::before{background:var(--freelance);}
 
-/* HOVER GLOW */
+/* HOVER */
 .course-card:hover{
-    transform: translateY(-10px);
-    box-shadow: 0 20px 60px rgba(56,189,248,0.15);
-}
-
-/* TEXT EMPHASIS */
-.course-card h3{
-    transition: 0.3s ease;
+    transform:translateY(-10px);
+    box-shadow:0 20px 60px rgba(56,189,248,0.15);
 }
 
 .course-card:hover h3{
-    color: var(--primary);
+    color:var(--primary);
 }
 
-/* STAGGER ANIMATION */
-.course-card{
-    opacity: 0;
-    transform: translateY(30px);
-    animation: popIn 0.8s forwards;
-}
-
-.course-card:nth-child(1){ animation-delay:0.1s; }
-.course-card:nth-child(2){ animation-delay:0.2s; }
-.course-card:nth-child(3){ animation-delay:0.3s; }
-.course-card:nth-child(4){ animation-delay:0.4s; }
-.course-card:nth-child(5){ animation-delay:0.5s; }
-.course-card:nth-child(6){ animation-delay:0.6s; }
+/* STAGGER */
+.course-card:nth-child(1){animation-delay:0.1s;}
+.course-card:nth-child(2){animation-delay:0.2s;}
+.course-card:nth-child(3){animation-delay:0.3s;}
+.course-card:nth-child(4){animation-delay:0.4s;}
+.course-card:nth-child(5){animation-delay:0.5s;}
+.course-card:nth-child(6){animation-delay:0.6s;}
 
 @keyframes popIn{
     to{
@@ -96,15 +87,12 @@
 
 <body>
 
-<!-- ================= NAVIGATION ================= -->
+<!-- NAV -->
 <nav class="navbar">
-
     <div class="logo">MillieDev</div>
 
     <div class="menu-btn" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
     </div>
 
     <div class="menu-container" id="menu">
@@ -115,107 +103,99 @@
         <a href="about.html" onclick="closeMenu()">About</a>
         <a href="booking.html" onclick="closeMenu()">Booking</a>
     </div>
-
 </nav>
 
-<!-- ================= HERO ================= -->
+<!-- HERO -->
 <section class="hero course-hero animate-left"
 style="padding:100px 5%; text-align:center;">
 
-    <h1 style="font-size:3rem; margin-bottom:20px;">
-        Courses
-    </h1>
+    <h1 style="font-size:3rem;">Courses</h1>
 
     <p style="opacity:0.75; max-width:650px; margin:15px auto;">
-        Learn web development, design, digital business, and practical skills step by step.
+        Learn web development, design, and real-world digital skills step by step.
     </p>
 
 </section>
 
-<!-- ================= COURSES GRID ================= -->
+<!-- COURSES GRID -->
 <section style="padding:40px 5%;">
 
-    <div class="grid">
+<div class="grid">
 
-        <a href="course-html-css.html" class="card course-card html">
-            <h3>HTML & CSS Basics</h3>
-            <p>Master structure, layout, and modern web styling.</p>
-        </a>
+    <a href="course.html?id=html-css" class="card course-card html">
+        <h3>HTML & CSS Basics</h3>
+        <p>Structure, layout, and modern styling.</p>
+    </a>
 
-        <a href="course-js.html" class="card course-card js">
-            <h3>JavaScript Fundamentals</h3>
-            <p>Logic, functions, events, and interactive web apps.</p>
-        </a>
+    <a href="course.html?id=javascript" class="card course-card js">
+        <h3>JavaScript Fundamentals</h3>
+        <p>Logic, functions, and interactivity.</p>
+    </a>
 
-        <a href="course-fullstack.html" class="card course-card stack">
-            <h3>Full Stack Introduction</h3>
-            <p>Frontend + backend systems and real-world apps.</p>
-        </a>
+    <a href="course.html?id=fullstack" class="card course-card stack">
+        <h3>Full Stack Introduction</h3>
+        <p>Frontend + backend systems.</p>
+    </a>
 
-        <a href="course-responsive.html" class="card course-card responsive">
-            <h3>Responsive Design</h3>
-            <p>Build websites that adapt to all devices.</p>
-        </a>
+    <a href="course.html?id=responsive" class="card course-card responsive">
+        <h3>Responsive Design</h3>
+        <p>All-device layouts and UI scaling.</p>
+    </a>
 
-        <a href="course-deploy.html" class="card course-card deploy">
-            <h3>Website Deployment</h3>
-            <p>Publish websites using hosting & domains.</p>
-        </a>
+    <a href="course.html?id=deployment" class="card course-card deploy">
+        <h3>Website Deployment</h3>
+        <p>Hosting, domains, and launching.</p>
+    </a>
 
-        <a href="course-freelance.html" class="card course-card freelance">
-            <h3>Freelancing & Clients</h3>
-            <p>Get clients and earn from your skills.</p>
-        </a>
+    <a href="course.html?id=freelancing" class="card course-card freelance">
+        <h3>Freelancing & Clients</h3>
+        <p>Get clients and earn online.</p>
+    </a>
 
-    </div>
+</div>
 
 </section>
 
-<!-- ================= CTA ================= -->
+<!-- CLEAN CTA (NO BOOKING CONFUSION) -->
 <section class="fade-up"
 style="text-align:center; padding:70px 5%;">
 
-    <h2>Ready to start learning?</h2>
+    <h2>Choose Your Learning Path</h2>
 
-    <p style="opacity:0.7; margin:20px 0;">
-        Build valuable digital skills and create opportunities for your future.
+    <p style="opacity:0.7; max-width:700px; margin:20px auto;">
+        Select a course above to open lessons, modules, and projects.
     </p>
-
-    <a href="booking.html">
-        <button>Enroll Now</button>
-    </a>
 
 </section>
 
-<!-- ================= FOOTER ================= -->
+<!-- FOOTER -->
 <footer style="text-align:center; padding:40px; opacity:0.6;">
-    © 2026 MillieDev Learning System
+© 2026 MillieDev Learning System
 </footer>
 
-<!-- ================= MENU SCRIPT ================= -->
+<!-- SCRIPT -->
 <script>
 
-function toggleMenu() {
+function toggleMenu(){
     document.getElementById("menu").classList.toggle("active");
 }
 
-function closeMenu() {
+function closeMenu(){
     document.getElementById("menu").classList.remove("active");
 }
 
 window.addEventListener("load", () => {
     const menu = document.getElementById("menu");
-    if (menu) menu.classList.remove("active");
+    if(menu) menu.classList.remove("active");
 });
 
-/* click outside close */
-document.addEventListener("click", function(e) {
+document.addEventListener("click", function(e){
     const menu = document.getElementById("menu");
     const btn = document.querySelector(".menu-btn");
 
-    if (!menu || !btn) return;
+    if(!menu || !btn) return;
 
-    if (!menu.contains(e.target) && !btn.contains(e.target)) {
+    if(!menu.contains(e.target) && !btn.contains(e.target)){
         menu.classList.remove("active");
     }
 });
