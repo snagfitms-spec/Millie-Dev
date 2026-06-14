@@ -9,6 +9,7 @@
 </head>
 <body>
 
+<!-- ================= NAVBAR ================= -->
 <nav class="navbar">
     <div class="logo">MillieDev</div>
     <div class="menu-btn" onclick="toggleMenu()">
@@ -27,8 +28,10 @@
     </div>
 </nav>
 
+<!-- ================= HERO ================= -->
 <section class="hero" style="padding:80px 5%; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:60px;">
 
+    <!-- Left side: Text -->
     <div class="animate-left" style="flex:1; min-width:300px; max-width:600px;">
         <h1 style="font-size:2.7rem; margin-bottom:15px;">
             Building Digital Systems That Scale Your Business
@@ -42,33 +45,37 @@
         <a href="pricing.html"><button style="margin-left:10px;">View Pricing</button></a>
     </div>
 
+    <!-- Right side: Floating Image with your RAW link -->
     <div class="animate-right" style="flex:1; min-width:300px; display:flex; justify-content:center; align-items:center;">
-        <img src="https://cdn.jsdelivr.net/gh/snagfitms-spec/Millie-Dev@main/image-22.jpg" 
+        <img src="https://raw.githubusercontent.com/snagfitms-spec/Millie-Dev/main/file_00000000bf8c7243b4a450556ba07032.png" 
              alt="MillieDev Services Overview"
              class="floating-element"
              style="width:100%; max-width:500px; height:auto; display:block; border:none; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
     </div>
 </section>
 
+<!-- ================= STATS ================= -->
 <section style="padding:20px 5%;">
     <div class="grid">
-        <div class="card"><h3>💻</h3><h3>50+</h3><p>Projects Completed</p></div>
-        <div class="card"><h3>👥</h3><h3>30+</h3><p>Happy Clients</p></div>
-        <div class="card"><h3>🚀</h3><h3>3+ Years</h3><p>Experience</p></div>
-        <div class="card"><h3>⭐</h3><h3>100%</h3><p>Client Satisfaction</p></div>
+        <div class="card fade-up"><h3>💻</h3><h3>50+</h3><p>Projects Completed</p></div>
+        <div class="card fade-up"><h3>👥</h3><h3>30+</h3><p>Happy Clients</p></div>
+        <div class="card fade-up"><h3>🚀</h3><h3>3+ Years</h3><p>Experience</p></div>
+        <div class="card fade-up"><h3>⭐</h3><h3>100%</h3><p>Client Satisfaction</p></div>
     </div>
 </section>
 
+<!-- ================= SERVICES ================= -->
 <section style="padding:60px 5%;">
     <h2 style="text-align:center; margin-bottom:30px;">Services</h2>
     <div class="grid">
-        <div class="card"><h3>Web Design</h3><p>Modern responsive websites.</p></div>
-        <div class="card"><h3>E-Commerce</h3><p>Online stores with payment integration.</p></div>
-        <div class="card"><h3>Automation Systems</h3><p>SaaS tools and backend systems.</p></div>
-        <div class="card"><h3>Tech Courses</h3><p>Learn how to build real products.</p></div>
+        <div class="card fade-up"><h3>Web Design</h3><p>Modern responsive websites.</p></div>
+        <div class="card fade-up"><h3>E-Commerce</h3><p>Online stores with payment integration.</p></div>
+        <div class="card fade-up"><h3>Automation Systems</h3><p>SaaS tools and backend systems.</p></div>
+        <div class="card fade-up"><h3>Tech Courses</h3><p>Learn how to build real products.</p></div>
     </div>
 </section>
 
+<!-- ================= CTA ================= -->
 <section style="text-align:center; padding:80px 5%;">
     <h2>Ready to Build Something Powerful?</h2>
     <a href="pricing.html"><button style="margin-right:10px;">View Pricing</button></a>
@@ -81,6 +88,20 @@
     function toggleMenu(){ document.getElementById("menu").classList.toggle("active"); }
     function closeMenu(){ document.getElementById("menu").classList.remove("active"); }
     window.addEventListener("load", () => { document.getElementById("menu").classList.remove("active"); });
+    
+    /* Scroll Reveal Script */
+    function revealOnScroll() {
+        var reveals = document.querySelectorAll(".fade-up");
+        for (var i = 0; i < reveals.length; i++) {
+            var windowHeight = window.innerHeight;
+            var elementTop = reveals[i].getBoundingClientRect().top;
+            if (elementTop < windowHeight - 100) {
+                reveals[i].style.opacity = "1";
+            }
+        }
+    }
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
 </script>
 
 </body>
