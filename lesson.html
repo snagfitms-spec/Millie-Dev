@@ -10,61 +10,45 @@
 
 <style>
 
-/* ================= LEVEL 11 LESSON ENGINE ================= */
+/* ================= LEVEL 12 LESSON ENGINE ================= */
 
 body {
     background: var(--bg);
+    margin: 0;
 }
 
-/* HEADER */
-.lesson-header {
-    padding: 60px 5% 30px 5%;
-    max-width: 900px;
-    margin: auto;
-}
-
-.lesson-title {
-    font-size: 2.4rem;
-    font-weight: 700;
-}
-
-.lesson-meta {
-    opacity: 0.6;
-    margin-top: 10px;
-}
-
-/* CONTENT */
-.lesson-content {
-    max-width: 900px;
-    margin: auto;
-    padding: 30px 5%;
-}
-
-.lesson-box {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 25px;
-    line-height: 1.8;
-    animation: fadeIn 0.5s ease;
-}
-
-/* NAVIGATION */
-.lesson-nav {
+/* TOP NAV BAR */
+.topbar {
     display: flex;
     justify-content: space-between;
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 0 5%;
+    align-items: center;
+    padding: 18px 5%;
+    border-bottom: 1px solid var(--border);
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* BACK BUTTON */
+.back {
+    color: var(--primary);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* NAV BUTTONS */
+.nav-buttons {
+    display: flex;
+    gap: 10px;
 }
 
 button {
-    padding: 10px 15px;
-    border: none;
+    padding: 8px 12px;
     border-radius: 8px;
+    border: none;
     cursor: pointer;
-    background: var(--primary);
-    color: black;
     font-weight: 600;
     transition: 0.3s ease;
 }
@@ -73,10 +57,39 @@ button:hover {
     transform: translateY(-2px);
 }
 
-/* FADE */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+/* PRIMARY BUTTON */
+.primary {
+    background: var(--primary);
+    color: #0a0f1f;
+}
+
+/* CONTENT AREA */
+.lesson-wrapper {
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 5%;
+}
+
+/* TITLE */
+.lesson-title {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+/* BOX */
+.lesson-box {
+    margin-top: 20px;
+    padding: 25px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+/* STATUS */
+.status {
+    margin-top: 15px;
+    opacity: 0.7;
+    font-size: 0.9rem;
 }
 
 </style>
@@ -85,50 +98,52 @@ button:hover {
 
 <body>
 
-<!-- BACK -->
-<div style="padding:20px 5%;">
-    <button onclick="history.back()">← Back</button>
-</div>
+<!-- ================= TOP BAR ================= -->
+<div class="topbar">
 
-<!-- HEADER -->
-<div class="lesson-header">
-
-    <div class="lesson-title" id="title">Loading...</div>
-
-    <div class="lesson-meta" id="meta"></div>
-
-</div>
-
-<!-- CONTENT -->
-<div class="lesson-content">
-    <div class="lesson-box" id="content">
-        Loading lesson...
+    <div class="back" onclick="goBack()">
+        ← Back to Course
     </div>
+
+    <div class="nav-buttons">
+        <button onclick="prevLesson()">Prev</button>
+        <button onclick="nextLesson()">Next</button>
+        <button class="primary" onclick="completeLesson()">Complete</button>
+    </div>
+
 </div>
 
-<!-- NAV -->
-<div class="lesson-nav">
-    <button onclick="prevLesson()">← Previous</button>
-    <button onclick="nextLesson()">Next →</button>
+<!-- ================= LESSON CONTENT ================= -->
+<div class="lesson-wrapper">
+
+    <h1 class="lesson-title" id="title">Loading...</h1>
+
+    <div class="lesson-box" id="content">
+        Loading lesson content...
+    </div>
+
+    <div class="status" id="status"></div>
+
 </div>
 
 <script src="coursesData.js"></script>
 
 <script>
 
-/* ================= LEVEL 11 ENGINE ================= */
+/* ================= LEVEL 12 LESSON ENGINE ================= */
 
 const params = new URLSearchParams(window.location.search);
 
 const courseId = params.get("course");
-const moduleIndex = parseInt(params.get("module"));
-const lessonIndex = parseInt(params.get("lesson"));
+const moduleIndex = parseInt(params.get("m"));
+const lessonIndex = parseInt(params.get("l"));
 
 const course = courses[courseId];
 
 if (!course) {
 
     document.getElementById("title").innerText = "Course Not Found";
+    document.getElementById("content").innerText = "Invalid course link.";
 
 } else {
 
@@ -136,23 +151,78 @@ if (!course) {
     const lesson = module.lessons[lessonIndex];
 
     document.getElementById("title").innerText = lesson;
-    document.getElementById("meta").innerText =
-        `${course.title} → ${module.title}`;
 
-    document.getElementById("content").innerText =
-        "This is where full lesson content will be rendered (Level 11 engine ready).";
+    document.getElementById("content").innerHTML = `
+        <h3>${module.title}</h3>
+        <p style="opacity:0.7; margin-top:10px;">
+            ${module.description}
+        </p>
+
+        <hr style="margin:20px 0; border:1px solid var(--border);">
+
+        <p>
+            📘 Lesson: <strong>${lesson}</strong>
+        </p>
+
+        <p style="opacity:0.7; margin-top:10px;">
+            This is your learning space. Future upgrades will include videos, quizzes, and interactive coding blocks.
+        </p>
+    `;
+
+    updateProgress();
+    showProgress();
+}
+
+/* ================= PROGRESS SYSTEM ================= */
+
+function updateProgress() {
+
+    const key = `progress_${courseId}`;
+
+    let data = JSON.parse(localStorage.getItem(key)) || {};
+
+    data[`${moduleIndex}-${lessonIndex}`] = true;
+
+    localStorage.setItem(key, JSON.stringify(data));
+}
+
+/* ================= SHOW PROGRESS ================= */
+
+function showProgress() {
+
+    const key = `progress_${courseId}`;
+    const data = JSON.parse(localStorage.getItem(key)) || {};
+
+    const completed = Object.keys(data).length;
+
+    document.getElementById("status").innerText =
+        `Progress: ${completed} lesson(s) completed`;
 }
 
 /* ================= NAVIGATION ================= */
 
 function nextLesson() {
     window.location.href =
-        `lesson.html?course=${courseId}&module=${moduleIndex}&lesson=${lessonIndex + 1}`;
+        `lesson.html?course=${courseId}&m=${moduleIndex}&l=${lessonIndex + 1}`;
 }
 
 function prevLesson() {
     window.location.href =
-        `lesson.html?course=${courseId}&module=${moduleIndex}&lesson=${lessonIndex - 1}`;
+        `lesson.html?course=${courseId}&m=${moduleIndex}&l=${lessonIndex - 1}`;
+}
+
+/* ================= COMPLETE LESSON ================= */
+
+function completeLesson() {
+    alert("Lesson completed ✔");
+    updateProgress();
+    showProgress();
+}
+
+/* ================= BACK ================= */
+
+function goBack() {
+    window.location.href = `course.html?id=${courseId}`;
 }
 
 </script>
