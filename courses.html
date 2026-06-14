@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Courses | MillieDev</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
+<title>Courses | MillieDev</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
 </head>
 
 <body>
@@ -33,79 +34,63 @@
 
 </nav>
 
-<!-- ================= HERO SECTION ================= -->
-<section class="hero">
+<!-- ================= HERO (LEVEL 9 ANIMATED) ================= -->
+<section class="hero animate-left"
+style="padding:100px 5%; text-align:center;">
 
-    <div class="container">
+    <h1 style="font-size:3rem; margin-bottom:20px;">
+        Courses
+    </h1>
 
-        <h1>Courses</h1>
-
-        <p style="
-            text-align:center;
-            opacity:0.7;
-            max-width:650px;
-            margin:15px auto;
-        ">
-            Learn web development, design, digital business, and practical online skills step by step.
-        </p>
-
-    </div>
+    <p style="opacity:0.75; max-width:650px; margin:15px auto;">
+        Learn web development, design, digital business, and practical skills
+        step by step to build real-world systems.
+    </p>
 
 </section>
 
-<!-- ================= COURSES SECTION ================= -->
+<!-- ================= COURSES GRID ================= -->
 <section style="padding:40px 5%;">
 
     <div class="grid">
 
-        <div class="card">
+        <div class="card fade-up">
             <h3>HTML & CSS Basics</h3>
-            <p>
-                Master the building blocks of the web and learn how websites are structured and styled.
-            </p>
+            <p>Master the building blocks of the web and understand structure + styling.</p>
         </div>
 
-        <div class="card">
+        <div class="card fade-up">
             <h3>JavaScript Fundamentals</h3>
-            <p>
-                Learn how to make websites interactive using functions, events, logic, and dynamic content.
-            </p>
+            <p>Learn logic, events, functions, and interactivity for web apps.</p>
         </div>
 
-        <div class="card">
+        <div class="card fade-up">
             <h3>Full Stack Introduction</h3>
-            <p>
-                Understand frontend and backend development and how complete applications are built.
-            </p>
+            <p>Understand frontend + backend systems and how real apps are built.</p>
         </div>
 
-        <div class="card">
-            <h3>Responsive Web Design</h3>
-            <p>
-                Learn how to build websites that work perfectly on phones, tablets, and desktops.
-            </p>
+        <div class="card fade-up">
+            <h3>Responsive Design</h3>
+            <p>Build websites that adapt perfectly to all devices and screens.</p>
         </div>
 
-        <div class="card">
+        <div class="card fade-up">
             <h3>Website Deployment</h3>
-            <p>
-                Learn how to publish websites online using modern hosting platforms and domains.
-            </p>
+            <p>Publish real websites using hosting platforms and live domains.</p>
         </div>
 
-        <div class="card">
-            <h3>Freelancing & Client Work</h3>
-            <p>
-                Learn how to find clients, manage projects, and earn income from your digital skills.
-            </p>
+        <div class="card fade-up">
+            <h3>Freelancing & Clients</h3>
+            <p>Learn how to get clients, manage work, and earn online income.</p>
         </div>
 
     </div>
 
 </section>
 
-<!-- ================= CTA SECTION ================= -->
-<section style="text-align:center; padding:70px 5%;">
+<!-- ================= CTA ================= -->
+<section class="fade-up"
+style="text-align:center; padding:70px 5%;">
 
     <h2>Ready to start learning?</h2>
 
@@ -114,9 +99,7 @@
     </p>
 
     <a href="booking.html">
-        <button style="max-width:250px;">
-            Enroll Now
-        </button>
+        <button>Enroll Now</button>
     </a>
 
 </section>
@@ -140,9 +123,9 @@ function closeMenu() {
 window.addEventListener("load", () => {
     const menu = document.getElementById("menu");
 
-    if (menu) {
-        menu.classList.remove("active");
-    }
+    if (menu) menu.classList.remove("active");
+
+    revealOnScroll();
 });
 
 document.addEventListener("click", function(e) {
@@ -152,14 +135,28 @@ document.addEventListener("click", function(e) {
 
     if (!menu || !btn) return;
 
-    if (
-        !menu.contains(e.target) &&
-        !btn.contains(e.target)
-    ) {
+    if (!menu.contains(e.target) && !btn.contains(e.target)) {
         menu.classList.remove("active");
     }
 
 });
+
+/* ================= LEVEL 9 SCROLL ENGINE ================= */
+function revealOnScroll() {
+
+    const elements = document.querySelectorAll(".fade-up");
+
+    elements.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if (top < windowHeight - 80) {
+            el.classList.add("active");
+        }
+    });
+}
+
+window.addEventListener("scroll", revealOnScroll);
 
 </script>
 
