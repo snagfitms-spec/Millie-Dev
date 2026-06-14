@@ -7,64 +7,63 @@
 <title>Course | MillieDev</title>
 
 <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
 
 <style>
+/* ================= LEVEL 11 COURSE VIEWER ================= */
 
-/* ================= COURSE VIEWER LEVEL 10 ================= */
-
-body {
-    background: var(--bg);
-}
-
-/* HERO */
 .course-header {
-    padding: 90px 5%;
+    padding: 80px 5%;
     text-align: center;
 }
 
-.course-title {
+.course-header h1 {
     font-size: 2.8rem;
-    font-weight: 700;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.course-badge {
+.badge {
     display: inline-block;
     margin-top: 10px;
     padding: 5px 12px;
     border-radius: 20px;
-    font-size: 0.8rem;
-    background: rgba(255,255,255,0.08);
+    background: rgba(56,189,248,0.1);
+    color: var(--primary);
+    font-size: 0.85rem;
 }
 
-/* DESCRIPTION */
-.course-desc {
-    max-width: 700px;
-    margin: 20px auto;
-    opacity: 0.75;
+.modules {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px 5%;
 }
 
-/* MODULES */
 .module {
     background: var(--panel);
     border: 1px solid var(--border);
-    margin: 15px auto;
-    padding: 20px;
-    border-radius: 12px;
-    max-width: 900px;
+    border-radius: 16px;
+    margin-bottom: 15px;
+    overflow: hidden;
     transition: 0.3s ease;
+}
+
+.module-header {
+    padding: 15px 20px;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.module:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary);
+.module-header:hover {
+    background: rgba(255,255,255,0.03);
 }
 
-/* LESSONS */
 .lessons {
-    margin-top: 10px;
-    padding-left: 15px;
     display: none;
+    padding: 10px 20px 20px 20px;
 }
 
 .module.active .lessons {
@@ -72,91 +71,142 @@ body {
 }
 
 .lesson {
-    padding: 6px 0;
-    opacity: 0.8;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 10px;
     cursor: pointer;
+    transition: 0.2s;
+    background: rgba(255,255,255,0.02);
 }
 
 .lesson:hover {
+    background: rgba(56,189,248,0.1);
     color: var(--primary);
 }
 
-/* BACK BUTTON */
-.back-btn {
+/* LOADING SCREEN */
+#loading {
     position: fixed;
-    top: 20px;
-    left: 20px;
-    background: var(--primary);
-    color: black;
-    padding: 8px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
+    inset: 0;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
 }
-
 </style>
 
 </head>
 
 <body>
 
-<div class="back-btn" onclick="history.back()">← Back</div>
+<!-- ================= NAV ================= -->
+<nav class="navbar">
+    <div class="logo">MillieDev</div>
+</nav>
 
-<!-- COURSE HEADER -->
-<div class="course-header">
-
-    <h1 class="course-title" id="title">Loading...</h1>
-
-    <div class="course-badge" id="level"></div>
-
-    <p class="course-desc" id="desc"></p>
-
+<!-- ================= LOADING ================= -->
+<div id="loading">
+    <div style="
+        width:40px;
+        height:40px;
+        border:3px solid rgba(255,255,255,0.2);
+        border-top:3px solid var(--primary);
+        border-radius:50%;
+        animation:spin 1s linear infinite;
+        margin-bottom:15px;
+    "></div>
+    <p>Loading course...</p>
 </div>
 
-<!-- MODULE CONTAINER -->
-<div id="modules"></div>
+<!-- ================= COURSE HEADER ================= -->
+<section class="course-header">
+    <h1 id="title">Loading...</h1>
+    <div class="badge" id="level"></div>
+    <p id="desc" style="opacity:0.7; margin-top:10px;"></p>
+</section>
+
+<!-- ================= MODULES ================= -->
+<section class="modules" id="modules"></section>
 
 <script src="coursesData.js"></script>
 
 <script>
 
-/* ================= LOAD COURSE ================= */
+/* ================= GET COURSE ================= */
 
 const params = new URLSearchParams(window.location.search);
 const courseId = params.get("id");
 
 const course = courses[courseId];
 
-if (!course) {
-    document.getElementById("title").innerText = "Course Not Found";
-} else {
+const loading = document.getElementById("loading");
+const modulesContainer = document.getElementById("modules");
+
+/* ================= INIT ================= */
+
+window.addEventListener("load", () => {
+
+    if (!course) {
+        document.getElementById("title").innerText = "Course Not Found";
+        document.getElementById("desc").innerText = "Invalid course selection.";
+        loading.style.display = "none";
+        return;
+    }
 
     document.getElementById("title").innerText = course.title;
     document.getElementById("level").innerText = course.level;
     document.getElementById("desc").innerText = course.description;
 
-    const container = document.getElementById("modules");
+    renderModules();
 
-    course.modules.forEach((mod, index) => {
+    setTimeout(() => {
+        loading.style.display = "none";
+    }, 500);
+});
+
+/* ================= RENDER MODULES ================= */
+
+function renderModules() {
+
+    modulesContainer.innerHTML = "";
+
+    course.modules.forEach((module, mIndex) => {
 
         const div = document.createElement("div");
         div.className = "module";
 
         div.innerHTML = `
-            <h3>${mod.title}</h3>
-            <p style="opacity:0.7;">${mod.description || ""}</p>
+            <div class="module-header">
+                <h3>${module.title}</h3>
+                <span>▼</span>
+            </div>
 
             <div class="lessons">
-                ${mod.lessons.map(l => `<div class="lesson">• ${l}</div>`).join("")}
+                ${module.lessons.map((lesson, lIndex) => `
+                    <div class="lesson"
+                        onclick="openLesson('${module.id}', '${lesson.id}')">
+                        ▶ ${lesson.title}
+                    </div>
+                `).join("")}
             </div>
         `;
 
-        div.addEventListener("click", () => {
+        div.querySelector(".module-header").addEventListener("click", () => {
             div.classList.toggle("active");
         });
 
-        container.appendChild(div);
+        modulesContainer.appendChild(div);
     });
+}
+
+/* ================= LESSON NAV ================= */
+
+function openLesson(moduleId, lessonId) {
+
+    window.location.href = 
+        `lesson.html?course=${courseId}&module=${moduleId}&lesson=${lessonId}`;
 }
 
 </script>
