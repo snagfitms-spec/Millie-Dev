@@ -272,6 +272,45 @@ button.outline:hover {
 }
 
 /* =========================
+LEVEL 10 HERO ANIMATION FIX (SAFE)
+========================= */
+
+.hero-text-left {
+    opacity: 0;
+    animation: heroLeft 1s ease forwards;
+}
+
+.hero-text-right {
+    opacity: 0;
+    animation: heroRight 1s ease forwards;
+    animation-delay: 0.2s;
+}
+
+/* LEFT ENTRY */
+@keyframes heroLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-70px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* RIGHT ENTRY */
+@keyframes heroRight {
+    from {
+        opacity: 0;
+        transform: translateX(70px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* =========================
 LINK SYSTEM
 ========================= */
 
