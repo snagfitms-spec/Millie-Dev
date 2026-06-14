@@ -1,1 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Course | MillieDev</title>
+
+<link rel="stylesheet" href="style.css">
+<script src="coursesData.js"></script>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">MillieDev</div>
+
+    <div class="menu-btn" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="menu-container" id="menu">
+        <a href="index.html">Home</a>
+        <a href="courses.html">Courses</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="about.html">About</a>
+        <a href="booking.html">Booking</a>
+    </div>
+
+</nav>
+
+<section class="hero" style="padding:100px 5%; text-align:center;">
+
+    <h1 id="courseTitle"></h1>
+
+    <p id="courseDescription"
+       style="max-width:700px; margin:20px auto; opacity:.8;">
+    </p>
+
+</section>
+
+<section style="padding:40px 5%;">
+
+    <div id="modulesContainer" class="grid">
+
+    </div>
+
+</section>
+
+<script>
+
+function toggleMenu() {
+    document.getElementById("menu").classList.toggle("active");
+}
+
+const params = new URLSearchParams(window.location.search);
+
+const courseId = params.get("id");
+
+if(courses[courseId]) {
+
+    const course = courses[courseId];
+
+    document.getElementById("courseTitle").innerText =
+        course.title;
+
+    document.getElementById("courseDescription").innerText =
+        course.description;
+
+    const container =
+        document.getElementById("modulesContainer");
+
+    course.modules.forEach(module => {
+
+        container.innerHTML += `
+            <div class="card">
+                <h3>${module.title}</h3>
+                <p>${module.description}</p>
+            </div>
+        `;
+
+    });
+
+} else {
+
+    document.getElementById("courseTitle").innerText =
+        "Course Not Found";
+
+}
+
+</script>
+
+</body>
+</html>
