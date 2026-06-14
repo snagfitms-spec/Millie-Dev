@@ -1,5 +1,6 @@
 /* =========================
-PREMIUM DESIGN SYSTEM (LAYER 6 UPGRADED)
+LEVEL 9 DESIGN SYSTEM
+MILLIEDEV PREMIUM UI ENGINE
 ========================= */
 
 :root {
@@ -11,56 +12,75 @@ PREMIUM DESIGN SYSTEM (LAYER 6 UPGRADED)
     --accent: #FF4FD8;
     --success: #22C55E;
     --warning: #F59E0B;
-    --card: rgba(255, 255, 255, 0.03);
-    --border: rgba(255, 255, 255, 0.08);
+    --border: rgba(255,255,255,0.08);
 }
 
-/* GLOBAL RESET */
+/* =========================
+RESET
+========================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    transition: all 0.25s ease;
 }
 
 body {
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
 }
 
 /* =========================
-ANIMATION SYSTEM (UPDATED)
+ANIMATION ENGINE (LEVEL 9)
 ========================= */
 
-/* Floating Effect */
-@keyframes heroFloat {
-    0%, 100% { transform: translateY(0px); }
+/* Floating image */
+@keyframes floatY {
+    0%,100% { transform: translateY(0); }
     50% { transform: translateY(-15px); }
 }
 
 .floating-element {
-    animation: heroFloat 5s ease-in-out infinite;
+    animation: floatY 5s ease-in-out infinite;
 }
 
-/* Slide-in Animations */
-@keyframes slideInLeft {
-    from { opacity: 0; transform: translateX(-50px); }
-    to { opacity: 1; transform: translateX(0); }
+/* HERO ENTRY */
+.animate-left {
+    animation: slideLeft 1s ease forwards;
 }
 
-@keyframes slideInRight {
-    from { opacity: 0; transform: translateX(50px); }
-    to { opacity: 1; transform: translateX(0); }
+.animate-right {
+    animation: slideRight 1s ease forwards;
 }
 
-.animate-left { animation: slideInLeft 0.8s ease-out forwards; }
-.animate-right { animation: slideInRight 0.8s ease-out forwards; }
+@keyframes slideLeft {
+    from { opacity:0; transform:translateX(-60px); }
+    to { opacity:1; transform:translateX(0); }
+}
+
+@keyframes slideRight {
+    from { opacity:0; transform:translateX(60px); }
+    to { opacity:1; transform:translateX(0); }
+}
+
+/* SCROLL REVEAL SYSTEM */
+.fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
+}
+
+.fade-up.active {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 /* =========================
-NAVBAR + HAMBURGER FIX
+NAVBAR SYSTEM
 ========================= */
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -74,10 +94,25 @@ NAVBAR + HAMBURGER FIX
     z-index: 1000;
 }
 
-.logo { font-weight: 700; font-size: 1.4rem; color: var(--primary); }
+.logo {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--primary);
+}
 
-.menu-btn { display: flex; flex-direction: column; gap: 5px; cursor: pointer; }
-.menu-btn span { width: 25px; height: 2px; background: var(--text); border-radius: 5px; }
+.menu-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.menu-btn span {
+    width: 25px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 5px;
+}
 
 .menu-container {
     position: absolute;
@@ -92,41 +127,104 @@ NAVBAR + HAMBURGER FIX
     gap: 10px;
     min-width: 180px;
 }
-.menu-container.active { display: flex; }
-.menu-container a { color: var(--text); text-decoration: none; padding: 8px; border-radius: 8px; }
-.menu-container a:hover { background: rgba(56, 189, 248, 0.1); color: var(--primary); }
+
+.menu-container.active {
+    display: flex;
+}
+
+.menu-container a {
+    color: var(--text);
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.menu-container a:hover {
+    background: rgba(56, 189, 248, 0.1);
+    color: var(--primary);
+}
 
 /* =========================
 GRID SYSTEM
 ========================= */
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px; }
-.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px; }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
 
 @media (max-width: 900px) {
-    .stats { grid-template-columns: 1fr 1fr; }
-    .grid { grid-template-columns: 1fr; }
+    .grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* =========================
-CARD SYSTEM
+CARD SYSTEM (LEVEL 9)
 ========================= */
+
 .card {
     background: #111827;
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
 }
+
 .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.35);
-    border-color: rgba(56, 189, 248, 0.3);
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 25px 60px rgba(56,189,248,0.15);
+}
+
+.card:active {
+    transform: scale(0.98);
 }
 
 /* =========================
-BUTTONS
+PORTFOLIO SYSTEM (LEVEL 9)
 ========================= */
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.portfolio-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 30px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.portfolio-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary);
+    box-shadow:
+        0 25px 60px rgba(56,189,248,0.15),
+        0 0 20px rgba(56,189,248,0.1);
+}
+
+.portfolio-card:active {
+    transform: scale(0.98);
+}
+
+.portfolio-card:hover h3 {
+    color: var(--primary);
+}
+
+/* =========================
+BUTTON SYSTEM (FIXED VIEW WORK ISSUE)
+========================= */
+
 button {
     background: var(--primary);
     color: #0a0f1f;
@@ -135,55 +233,43 @@ button {
     border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
+    transition: all 0.3s ease;
 }
-button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3); }
 
-/* =========================
-PORTFOLIO SYSTEM
-========================= */
-.portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: 40px; }
-.portfolio-card {
-    position: relative;
-    overflow: hidden;
-    min-height: 320px;
-    background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(56,189,248,0.3);
+}
+
+/* OUTLINE BUTTON (View Work FIX) */
+button.outline {
+    background: transparent;
     border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 30px;
-    cursor: pointer;
-    transition: all .4s ease;
-}
-.portfolio-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
-
-/* =========================
-   ANIMATION & INTERACTION ENGINE
-   ========================= */
-
-/* 1. Entrance Fade-Up (For Scroll-Reveal) */
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(50px); }
-    to { opacity: 1; transform: translateY(0); }
+    color: var(--text);
+    opacity: 0.9;
 }
 
-.fade-up {
-    opacity: 0; /* Hidden until JS triggers it */
-    animation: fadeUp 0.8s ease forwards;
-}
-
-/* 2. Hover Lift Effect (For Cards/Portfolio) */
-.card, .portfolio-card {
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.card:hover, .portfolio-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(56, 189, 248, 0.2);
+button.outline:hover {
     border-color: var(--primary);
+    color: var(--primary);
+    opacity: 1;
 }
 
 /* =========================
-GLOBAL STYLES
+GLOBAL LINKS
 ========================= */
-a { color: inherit; text-decoration: none; }
-a:hover { color: var(--primary); }
-img { max-width: 100%; height: auto; display: block; }
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--primary);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
