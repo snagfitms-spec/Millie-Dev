@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking | MillieDev</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Booking | MillieDev</title>
+
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<!-- ================= NAVBAR ================= -->
 <nav class="navbar">
+
     <div class="logo">MillieDev</div>
+
     <div class="menu-btn" onclick="toggleMenu()">
         <span></span><span></span><span></span>
     </div>
+
     <div class="menu-container" id="menu">
         <a href="index.html" onclick="closeMenu()">Home</a>
         <a href="services.html" onclick="closeMenu()">Services</a>
@@ -22,56 +28,121 @@
         <a href="about.html" onclick="closeMenu()">About</a>
         <a href="booking.html" onclick="closeMenu()">Booking</a>
     </div>
+
 </nav>
 
-<section class="hero">
-    <h1>Book a Service</h1>
-    <p style="text-align:center; opacity:0.7; max-width:650px; margin:15px auto;">
-        Fill in the form below and I’ll get back to you as soon as possible.
+<!-- ================= HERO ================= -->
+<section class="hero animate-left"
+style="text-align:center; padding:100px 5%;">
+
+    <h1 style="font-size:3rem;">
+        Book a Service
+    </h1>
+
+    <p style="opacity:0.7; max-width:650px; margin:15px auto;">
+        Choose a service, fill in your details, and I’ll respond with your project plan.
     </p>
+
 </section>
 
+<!-- ================= SERVICE SELECTION ================= -->
 <section style="padding:40px 5%;">
-    <h2 style="text-align:center; margin-bottom:20px; color:var(--primary);">Choose a Service</h2>
+
+    <h2 style="text-align:center; margin-bottom:20px; color:var(--primary);">
+        Choose a Service
+    </h2>
+
     <div class="grid">
-        <div class="card" onclick="selectService('Web Design')"><h3>Web Design</h3><p>Modern business websites</p></div>
-        <div class="card" onclick="selectService('E-Commerce')"><h3>E-Commerce</h3><p>Online stores & payment systems</p></div>
-        <div class="card" onclick="selectService('Landing Page')"><h3>Landing Page</h3><p>High-conversion marketing pages</p></div>
-        <div class="card" onclick="selectService('Custom System')"><h3>Custom System</h3><p>Advanced web applications</p></div>
+
+        <div class="card fade-up" onclick="selectService('Web Design')">
+            <h3>Web Design</h3>
+            <p>Modern business websites</p>
+        </div>
+
+        <div class="card fade-up" onclick="selectService('E-Commerce')">
+            <h3>E-Commerce</h3>
+            <p>Online stores & payments</p>
+        </div>
+
+        <div class="card fade-up" onclick="selectService('Landing Page')">
+            <h3>Landing Page</h3>
+            <p>High-conversion pages</p>
+        </div>
+
+        <div class="card fade-up" onclick="selectService('Custom System')">
+            <h3>Custom System</h3>
+            <p>Advanced web applications</p>
+        </div>
+
     </div>
+
 </section>
 
+<!-- ================= BOOKING FORM ================= -->
 <section style="padding:40px 5%;">
-    <div class="card">
-        <h3>Send Your Request</h3>
+
+    <div class="card fade-up"
+    style="max-width:700px; margin:auto;">
+
+        <h3 style="margin-bottom:20px;">Send Your Request</h3>
+
         <form id="bookingForm">
+
             <input type="text" id="name" placeholder="Your Name" required>
+            <br><br>
+
             <input type="email" id="email" placeholder="Your Email" required>
+            <br><br>
+
             <input type="text" id="service" placeholder="Selected Service" required>
-            <textarea id="message" placeholder="Describe your project in detail..." required></textarea>
+            <br><br>
+
+            <textarea id="message" placeholder="Describe your project..." required></textarea>
+            <br><br>
+
             <button type="submit">Submit Booking</button>
+
         </form>
+
         <p id="msg" style="margin-top:10px;"></p>
+
     </div>
+
 </section>
 
-<footer style="text-align:center; padding:40px; opacity:0.6;">© 2026 MillieDev Portfolio System</footer>
+<!-- ================= FOOTER ================= -->
+<footer style="text-align:center; padding:40px; opacity:0.6;">
+© 2026 MillieDev Portfolio System
+</footer>
 
+<!-- ================= SCRIPT ================= -->
 <script>
-function toggleMenu() { document.getElementById("menu").classList.toggle("active"); }
-function closeMenu() { document.getElementById("menu").classList.remove("active"); }
 
-function selectService(service) {
-    document.getElementById("service").value = service;
-    document.getElementById("bookingForm").scrollIntoView({ behavior: "smooth" });
+function toggleMenu(){
+    document.getElementById("menu").classList.toggle("active");
 }
 
-document.getElementById("bookingForm").addEventListener("submit", async function(e) {
+function closeMenu(){
+    document.getElementById("menu").classList.remove("active");
+}
+
+/* SERVICE SELECTOR */
+function selectService(service){
+    document.getElementById("service").value = service;
+
+    document.getElementById("bookingForm")
+    .scrollIntoView({ behavior: "smooth" });
+}
+
+/* FORM SUBMIT */
+document.getElementById("bookingForm").addEventListener("submit", async function(e){
+
     e.preventDefault();
 
     const msg = document.getElementById("msg");
+
     msg.innerText = "Sending...";
-    msg.style.color = "#3b82f6";
+    msg.style.color = "var(--primary)";
 
     const data = {
         name: document.getElementById("name").value,
@@ -81,22 +152,50 @@ document.getElementById("bookingForm").addEventListener("submit", async function
     };
 
     try {
+
         const res = await fetch("https://millie-dav.onrender.com/bookings", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
         });
 
-        if (!res.ok) throw new Error("Server error");
+        if(!res.ok) throw new Error("Server error");
 
         msg.innerText = "Booking sent successfully!";
-        msg.style.color = "#10b981";
+        msg.style.color = "var(--success)";
+
         this.reset();
-    } catch (error) {
-        msg.innerText = "Error sending booking. Please try again.";
+
+    } catch(err) {
+
+        msg.innerText = "Error sending booking. Try again.";
         msg.style.color = "#ef4444";
+
     }
+
 });
+
+/* LEVEL 9 SCROLL ENGINE */
+function revealOnScroll(){
+
+    const elements = document.querySelectorAll(".fade-up");
+
+    elements.forEach(el => {
+
+        const top = el.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if(top < windowHeight - 80){
+            el.classList.add("active");
+        }
+
+    });
+
+}
+
+window.addEventListener("scroll", revealOnScroll);
+window.addEventListener("load", revealOnScroll);
+
 </script>
 
 </body>
