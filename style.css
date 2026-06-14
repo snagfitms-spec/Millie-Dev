@@ -3,371 +3,161 @@ PREMIUM DESIGN SYSTEM (LAYER 6 UPGRADED)
 ========================= */
 
 :root {
---bg: #070B14;
---panel: #0F172A;
---text: #E6EDF7;
---muted: #94A3B8;
---primary: #38BDF8;
---accent: #FF4FD8;
---success: #22C55E;
---warning: #F59E0B;
---card: rgba(255, 255, 255, 0.03);
---border: rgba(255, 255, 255, 0.08);
+    --bg: #070B14;
+    --panel: #0F172A;
+    --text: #E6EDF7;
+    --muted: #94A3B8;
+    --primary: #38BDF8;
+    --accent: #FF4FD8;
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --card: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.08);
 }
 
 /* GLOBAL RESET */
-
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  transition: all 0.25s ease;
-  }
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.25s ease;
+}
 
 body {
-font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-background: var(--bg);
-color: var(--text);
-line-height: 1.6;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
 }
+
+/* =========================
+ANIMATION SYSTEM (UPDATED)
+========================= */
+
+/* Floating Effect */
+@keyframes heroFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+}
+
+.floating-element {
+    animation: heroFloat 5s ease-in-out infinite;
+}
+
+/* Slide-in Animations */
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-left { animation: slideInLeft 0.8s ease-out forwards; }
+.animate-right { animation: slideInRight 0.8s ease-out forwards; }
 
 /* =========================
 NAVBAR + HAMBURGER FIX
 ========================= */
-
 .navbar {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 20px 5%;
-border-bottom: 1px solid var(--border);
-background: rgba(15, 23, 42, 0.6);
-backdrop-filter: blur(15px);
-position: sticky;
-top: 0;
-z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    border-bottom: 1px solid var(--border);
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(15px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.logo {
-font-weight: 700;
-font-size: 1.4rem;
-color: var(--primary);
-}
+.logo { font-weight: 700; font-size: 1.4rem; color: var(--primary); }
 
-/* HAMBURGER BUTTON */
-.menu-btn {
-display: flex;
-flex-direction: column;
-gap: 5px;
-cursor: pointer;
-}
+.menu-btn { display: flex; flex-direction: column; gap: 5px; cursor: pointer; }
+.menu-btn span { width: 25px; height: 2px; background: var(--text); border-radius: 5px; }
 
-.menu-btn span {
-width: 25px;
-height: 2px;
-background: var(--text);
-border-radius: 5px;
-}
-
-/* MOBILE MENU */
 .menu-container {
-position: absolute;
-top: 70px;
-right: 5%;
-background: var(--panel);
-border: 1px solid var(--border);
-border-radius: 12px;
-padding: 10px;
-display: none;
-flex-direction: column;
-gap: 10px;
-min-width: 180px;
+    position: absolute;
+    top: 70px;
+    right: 5%;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 180px;
 }
-
-.menu-container.active {
-display: flex;
-}
-
-.menu-container a {
-color: var(--text);
-text-decoration: none;
-padding: 8px;
-border-radius: 8px;
-}
-
-.menu-container a:hover {
-background: rgba(56, 189, 248, 0.1);
-color: var(--primary);
-}
+.menu-container.active { display: flex; }
+.menu-container a { color: var(--text); text-decoration: none; padding: 8px; border-radius: 8px; }
+.menu-container a:hover { background: rgba(56, 189, 248, 0.1); color: var(--primary); }
 
 /* =========================
-GRID SYSTEM FIX
+GRID SYSTEM
 ========================= */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px; }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px; }
 
-.stats {
-display: grid;
-grid-template-columns: repeat(4, 1fr);
-gap: 20px;
-padding: 20px;
-}
-
-.grid {
-display: grid;
-grid-template-columns: repeat(4, 1fr);
-gap: 20px;
-padding: 20px;
-}
-
-/* RESPONSIVE FIX */
 @media (max-width: 900px) {
-.stats {
-grid-template-columns: 1fr 1fr;
-}
-
-.grid {
-    grid-template-columns: 1fr;
-}
-
+    .stats { grid-template-columns: 1fr 1fr; }
+    .grid { grid-template-columns: 1fr; }
 }
 
 /* =========================
-CARD SYSTEM (PREMIUM UI)
+CARD SYSTEM
 ========================= */
-
 .card {
-background: #111827;
-border: 1px solid var(--border);
-border-radius: 16px;
-padding: 20px;
-box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-transition: all 0.3s ease;
+    background: #111827;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
 }
-
 .card:hover {
-transform: translateY(-6px);
-box-shadow: 0 20px 40px rgba(0,0,0,0.35);
-border-color: rgba(56, 189, 248, 0.3);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+    border-color: rgba(56, 189, 248, 0.3);
 }
 
 /* =========================
-BUTTON FIX (VISIBLE UI)
+BUTTONS
 ========================= */
-
 button {
-background: var(--primary);
-color: #0a0f1f;
-border: none;
-padding: 10px 18px;
-border-radius: 10px;
-cursor: pointer;
-font-weight: 600;
+    background: var(--primary);
+    color: #0a0f1f;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
 }
-
-button:hover {
-transform: translateY(-2px);
-box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3);
-}
-
-/* OUTLINE BUTTON OPTION */
-button.outline {
-background: transparent;
-border: 1px solid var(--primary);
-color: var(--primary);
-}
+button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3); }
 
 /* =========================
-IMAGE SAFETY FIX
+PORTFOLIO SYSTEM
 ========================= */
-
-img {
-max-width: 100%;
-height: auto;
-display: block;
+.portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: 40px; }
+.portfolio-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 320px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 30px;
+    cursor: pointer;
+    transition: all .4s ease;
 }
+.portfolio-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
 
 /* =========================
-MICRO INTERACTIONS
+GLOBAL STYLES
 ========================= */
-
-a {
-color: inherit;
-text-decoration: none;
-}
-
-a:hover {
-color: var(--primary);
-}
-
-/* =========================
-PORTFOLIO LEVEL 8 SYSTEM
-========================= */
-
-.portfolio-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-gap:30px;
-margin-top:40px;
-}
-
-.portfolio-card{
-position:relative;
-overflow:hidden;
-min-height:320px;
-background:linear-gradient(
-145deg,
-rgba(255,255,255,0.04),
-rgba(255,255,255,0.02)
-);
-border:1px solid var(--border);
-border-radius:24px;
-padding:30px;
-cursor:pointer;
-transition:all .4s ease;
-}
-
-.portfolio-card:hover{
-transform:translateY(-10px);
-box-shadow:0 25px 50px rgba(0,0,0,0.4);
-}
-
-.portfolio-card::before{
-content:"";
-position:absolute;
-inset:0;
-opacity:0;
-transition:.4s;
-}
-
-.portfolio-card:hover::before{
-opacity:1;
-}
-
-.booking-card::before{
-background:
-radial-gradient(
-circle at top left,
-rgba(56,189,248,.18),
-transparent 60%
-);
-}
-
-.web-card::before{
-background:
-radial-gradient(
-circle at top left,
-rgba(255,79,216,.18),
-transparent 60%
-);
-}
-
-.testing-card::before{
-background:
-radial-gradient(
-circle at top left,
-rgba(34,197,94,.18),
-transparent 60%
-);
-}
-
-.project-badge{
-display:inline-block;
-padding:8px 14px;
-border-radius:50px;
-font-size:.8rem;
-margin-bottom:20px;
-font-weight:600;
-}
-
-.badge-blue{
-color:var(--primary);
-border:1px solid var(--primary);
-}
-
-.badge-pink{
-color:var(--accent);
-border:1px solid var(--accent);
-}
-
-.badge-green{
-color:var(--success);
-border:1px solid var(--success);
-}
-
-.project-title{
-font-size:1.4rem;
-margin-bottom:15px;
-position:relative;
-z-index:2;
-}
-
-.project-text{
-opacity:.75;
-line-height:1.8;
-margin-bottom:25px;
-position:relative;
-z-index:2;
-}
-
-.project-link{
-font-weight:600;
-position:relative;
-z-index:2;
-}
-
-.hero-glow{
-position:relative;
-}
-
-.hero-glow::after{
-content:"";
-position:absolute;
-width:350px;
-height:350px;
-background:radial-gradient(
-circle,
-rgba(56,189,248,.15),
-transparent 70%
-);
-top:-100px;
-right:-100px;
-pointer-events:none;
-}
-
-.fade-up{
-animation:fadeUp .8s ease forwards;
-}
-
-@keyframes fadeUp{
-from{
-opacity:0;
-transform:translateY(30px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-/* =========================
-HERO FLOATING EFFECT
-========================= */
-
-.hero-image-float {
-animation: heroFloat 5s ease-in-out infinite;
-}
-
-@keyframes heroFloat {
-
-0% {
-transform: translateY(0px);
-}
-
-50% {
-transform: translateY(-15px);
-}
-
-100% {
-transform: translateY(0px);
-}
-
-}
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--primary); }
+img { max-width: 100%; height: auto; display: block; }
