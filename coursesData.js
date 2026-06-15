@@ -1,135 +1,186 @@
 const courses = {
-    "html-css": {
-        id: "html-css",
-        title: "HTML & CSS Basics",
-        level: "Beginner",
-        premium: false,
-        description: "Learn how websites are structured and styled from scratch.",
-        modules: [
-            {
-                id: "intro-html",
-                title: "Introduction to HTML",
-                lessons: [
-                    {
-                        id: "what-is-html",
-                        title: "What is HTML?",
-                        content: {
-                            text: "HTML is the structure of all web pages. It defines elements like headings, paragraphs, links, images.",
-                            code: "<h1>Hello World</h1>",
-                            video: "",
-                            resources: []
-                        },
-                        quiz: {
-                            question: "What does HTML stand for?",
-                            options: [
-                                "Hyper Text Markup Language",
-                                "Home Tool Markup Language",
-                                "Hyperlinks Text Mark Language"
-                            ],
-                            answer: "Hyper Text Markup Language"
-                        },
-                        completed: false
+
+"html-css": {
+    id: "html-css",
+    title: "HTML & CSS Basics",
+    level: "Beginner",
+    premium: false,
+    description: "Learn how websites are structured and styled.",
+    modules: [
+        {
+            id: "html-intro",
+            title: "HTML Introduction",
+            lessons: [
+                {
+                    id: "what-is-html",
+                    title: "What is HTML?",
+                    content: {
+                        text: "HTML builds the structure of web pages.",
+                        code: "<h1>Hello</h1>"
+                    },
+                    quiz: {
+                        question: "HTML is used for?",
+                        options: ["Structure", "Styling", "Database"],
+                        answer: "Structure"
                     }
-                ]
-            },
-
-            {
-                id: "css-basics",
-                title: "CSS Basics",
-                lessons: [
-                    {
-                        id: "what-is-css",
-                        title: "What is CSS?",
-                        content: {
-                            text: "CSS is used to style HTML elements.",
-                            code: "body { color: red; }",
-                            video: "",
-                            resources: []
-                        }
+                },
+                {
+                    id: "tags",
+                    title: "HTML Tags",
+                    content: {
+                        text: "Tags define elements like headings and paragraphs."
                     }
-                ]
-            }
-        ]
-    },
+                }
+            ]
+        }
+    ]
+},
 
-    "javascript": {
-        id: "javascript",
-        title: "JavaScript Fundamentals",
-        level: "Beginner",
-        premium: false,
-        description: "Learn programming logic and interactivity.",
-        modules: [
-            {
-                id: "js-intro",
-                title: "JS Basics",
-                lessons: [
-                    {
-                        id: "variables",
-                        title: "Variables",
-                        content: {
-                            text: "Variables store data values.",
-                            code: "let name = 'Millie';"
-                        },
-                        quiz: {
-                            question: "Which keyword declares a variable?",
-                            options: ["let", "car", "make"],
-                            answer: "let"
-                        }
+"javascript": {
+    id: "javascript",
+    title: "JavaScript Fundamentals",
+    level: "Beginner",
+    premium: false,
+    description: "Learn logic and interactivity.",
+    modules: [
+        {
+            id: "js-basics",
+            title: "Basics",
+            lessons: [
+                {
+                    id: "variables",
+                    title: "Variables",
+                    content: {
+                        text: "Variables store data.",
+                        code: "let x = 10;"
+                    },
+                    quiz: {
+                        question: "Which keyword defines a variable?",
+                        options: ["let", "make", "varr"],
+                        answer: "let"
                     }
-                ]
-            }
-        ]
-    },
+                }
+            ]
+        }
+    ]
+},
 
-    "fullstack": {
-        id: "fullstack",
-        title: "Full Stack Intro",
-        level: "Intermediate",
-        premium: true,
-        description: "Frontend + Backend fundamentals.",
-        modules: [
-            {
-                id: "frontend",
-                title: "Frontend",
-                lessons: [
-                    {
-                        id: "ui",
-                        title: "UI Basics",
-                        content: {
-                            text: "Frontend is what users see."
-                        }
+"fullstack": {
+    id: "fullstack",
+    title: "Full Stack Intro",
+    level: "Intermediate",
+    premium: true,
+    description: "Frontend + backend basics.",
+    modules: [
+        {
+            id: "frontend",
+            title: "Frontend",
+            lessons: [
+                {
+                    id: "ui",
+                    title: "UI Basics",
+                    content: {
+                        text: "Frontend is what users see."
                     }
-                ]
-            }
-        ]
-    },
+                }
+            ]
+        }
+    ]
+},
 
-    "responsive-design": {
-        id: "responsive-design",
-        title: "Responsive Design",
-        level: "Beginner",
-        premium: false,
-        description: "Mobile friendly layouts.",
-        modules: []
-    },
+/* 💥 FIXED COURSES BELOW (THIS WAS YOUR ISSUE) */
 
-    "website-development": {
-        id: "website-development",
-        title: "Website Development",
-        level: "Intermediate",
-        premium: false,
-        description: "Build and deploy websites.",
-        modules: []
-    },
+"responsive-design": {
+    id: "responsive-design",
+    title: "Responsive Design",
+    level: "Beginner",
+    premium: false,
+    description: "Mobile-friendly websites.",
+    modules: [
+        {
+            id: "responsive-intro",
+            title: "Introduction",
+            lessons: [
+                {
+                    id: "what-is-responsive",
+                    title: "What is Responsive Design?",
+                    content: {
+                        text: "Responsive design makes websites adapt to all screen sizes."
+                    }
+                },
+                {
+                    id: "media-queries",
+                    title: "Media Queries",
+                    content: {
+                        text: "Media queries apply CSS based on screen size.",
+                        code: "@media (max-width: 768px) {}"
+                    }
+                }
+            ]
+        }
+    ]
+},
 
-    "freelancing": {
-        id: "freelancing",
-        title: "Freelancing & Clients",
-        level: "Intermediate",
-        premium: false,
-        description: "Get clients and earn online.",
-        modules: []
-    }
+"website-development": {
+    id: "website-development",
+    title: "Website Deployment",
+    level: "Intermediate",
+    premium: false,
+    description: "Build and deploy websites.",
+    modules: [
+        {
+            id: "deployment-basics",
+            title: "Deployment Basics",
+            lessons: [
+                {
+                    id: "hosting",
+                    title: "What is Hosting?",
+                    content: {
+                        text: "Hosting makes your website available online."
+                    }
+                },
+                {
+                    id: "github-pages",
+                    title: "GitHub Pages",
+                    content: {
+                        text: "GitHub Pages allows free website hosting."
+                    }
+                }
+            ]
+        }
+    ]
+},
+
+"freelancing": {
+    id: "freelancing",
+    title: "Freelancing & Clients",
+    level: "Intermediate",
+    premium: false,
+    description: "Get clients and earn online.",
+    modules: [
+        {
+            id: "clients",
+            title: "Getting Clients",
+            lessons: [
+                {
+                    id: "finding-clients",
+                    title: "Finding Clients",
+                    content: {
+                        text: "Clients can be found on platforms like Fiverr and Upwork."
+                    }
+                },
+                {
+                    id: "pricing",
+                    title: "Pricing Work",
+                    content: {
+                        text: "Set prices based on skill and project size."
+                    }
+                }
+            ]
+        }
+    ]
+}
+
 };
 
 window.courses = courses;
