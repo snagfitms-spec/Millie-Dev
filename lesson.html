@@ -1,315 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Lesson | MillieDev</title>
-
-<link rel="stylesheet" href="style.css">
-
-<style>
-
-/* ================= LEVEL 12 LESSON ENGINE V2 ================= */
-
-.lesson-container{
-    max-width: 900px;
-    margin: auto;
-    padding: 80px 5%;
-}
-
-.lesson-title{
-    font-size: 2.2rem;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.lesson-meta{
-    opacity: 0.6;
-    margin-bottom: 25px;
-}
-
-.lesson-box{
-    background: var(--panel);
-    padding: 25px;
-    border-radius: 14px;
-    border: 1px solid var(--border);
-    line-height: 1.7;
-}
-
-/* QUIZ */
-.quiz-box{
-    margin-top: 30px;
-    padding: 20px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.03);
-}
-
-.quiz-option{
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.quiz-option:hover{
-    background: rgba(255,255,255,0.05);
-}
-
-.quiz-option.correct{
-    background: rgba(34,197,94,0.2);
-    border-color: #22C55E;
-}
-
-.quiz-option.wrong{
-    background: rgba(239,68,68,0.2);
-    border-color: #EF4444;
-}
-
-/* NAV */
-.lesson-nav{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 40px;
-    gap: 10px;
-}
-
-.lesson-nav button{
-    flex: 1;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    background: var(--primary);
-    cursor: pointer;
-    font-weight: 600;
-}
-
-/* PROGRESS */
-.progress-bar{
-    height: 8px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 50px;
-    margin-bottom: 20px;
-    overflow: hidden;
-}
-
-.progress-fill{
-    height: 100%;
-    width: 0%;
-    background: var(--primary);
-    transition: 0.4s;
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson | MillieDev</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<nav class="navbar">
-    <div class="logo">MillieDev</div>
-</nav>
+<nav class="navbar"><div class="logo">MillieDev</div></nav>
 
 <div class="lesson-container">
-
-    <!-- PROGRESS -->
-    <div class="progress-bar">
-        <div class="progress-fill" id="progress"></div>
-    </div>
-
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
     <h1 class="lesson-title" id="title">Loading...</h1>
     <div class="lesson-meta" id="meta"></div>
-
-    <div class="lesson-box" id="content">
-        Loading lesson...
-    </div>
-
-    <!-- QUIZ -->
-    <div class="quiz-box" id="quizBox" style="display:none;">
-        <h3>Quick Quiz</h3>
-        <div id="quiz"></div>
-    </div>
-
-    <!-- NAV -->
+    <div class="lesson-box" id="content">Loading content...</div>
+    
     <div class="lesson-nav">
         <button onclick="prevLesson()">Previous</button>
         <button onclick="nextLesson()">Next</button>
     </div>
-
 </div>
 
 <script src="coursesData.js"></script>
-
 <script>
+    const params = new URLSearchParams(window.location.search);
+    const courseId = params.get("course");
+    const lessonId = params.get("lesson");
 
-/* ================= SAFE STATE ================= */
+    window.onload = () => {
+        const course = window.courses?.[courseId];
+        if (!course) return showError("Course not found");
 
-const params = new URLSearchParams(window.location.search);
+        // Flatten all lessons into a single track
+        let allLessons = [];
+        course.modules.forEach(m => m.lessons.forEach(l => allLessons.push({...l, mId: m.id, mTitle: m.title})));
+        
+        const index = allLessons.findIndex(l => l.id === lessonId);
+        if (index === -1) return showError("Lesson not found");
 
-const courseId = params.get("course");
-const moduleId = params.get("module");
-const lessonId = params.get("lesson");
+        const lesson = allLessons[index];
 
-let course = null;
-let module = null;
-let lessonIndex = -1;
+        // Render UI
+        document.getElementById("title").innerText = lesson.title;
+        document.getElementById("meta").innerText = `${course.title} → ${lesson.mTitle}`;
+        document.getElementById("content").innerHTML = lesson.content?.text || "No content.";
 
-/* ================= INIT ================= */
+        // Navigation Handlers
+        window.nextLesson = () => index < allLessons.length - 1 ? 
+            window.location.href = `lesson.html?course=${courseId}&lesson=${allLessons[index+1].id}` : alert("Done!");
+        
+        window.prevLesson = () => index > 0 ? 
+            window.location.href = `lesson.html?course=${courseId}&lesson=${allLessons[index-1].id}` : alert("Start of course.");
+    };
 
-window.onload = () => {
-
-    course = courses?.[courseId];
-
-    if(!course){
-        showError("Course not found");
-        return;
+    function showError(msg) {
+        document.getElementById("title").innerText = "Error";
+        document.getElementById("content").innerHTML = `<p>${msg}</p><a href="index.html">Back Home</a>`;
     }
-
-    module = course.modules?.find(m => m.id === moduleId);
-
-    if(!module){
-        showError("Module not found");
-        return;
-    }
-
-    lessonIndex = module.lessons?.findIndex(l => l.id === lessonId);
-
-    if(lessonIndex === -1){
-        showError("Lesson not found");
-        return;
-    }
-
-    loadLesson();
-    updateProgress();
-};
-
-/* ================= ERROR HANDLER ================= */
-
-function showError(msg){
-    document.getElementById("title").innerText = msg;
-    document.getElementById("content").innerHTML = "Please go back and select a valid lesson.";
-}
-
-/* ================= LOAD LESSON ================= */
-
-function loadLesson(){
-
-    const lesson = module.lessons[lessonIndex];
-
-    document.getElementById("title").innerText = lesson.title;
-    document.getElementById("meta").innerText =
-        `${course.title} → ${module.title}`;
-
-    document.getElementById("content").innerHTML =
-        lesson.content?.text || "No content available.";
-
-    renderQuiz(lesson);
-}
-
-/* ================= QUIZ ENGINE V2 ================= */
-
-function renderQuiz(lesson){
-
-    const quizBox = document.getElementById("quizBox");
-    const quiz = document.getElementById("quiz");
-
-    quiz.innerHTML = "";
-
-    if(!lesson.quiz){
-        quizBox.style.display = "none";
-        return;
-    }
-
-    quizBox.style.display = "block";
-
-    const q = lesson.quiz;
-
-    const question = document.createElement("div");
-    question.innerHTML = `<strong>${q.question}</strong>`;
-    quiz.appendChild(question);
-
-    q.options.forEach(opt => {
-
-        const btn = document.createElement("div");
-        btn.className = "quiz-option";
-        btn.innerText = opt;
-
-        btn.onclick = () => {
-
-            if(opt === q.answer){
-                btn.classList.add("correct");
-                markComplete();
-            } else {
-                btn.classList.add("wrong");
-            }
-        };
-
-        quiz.appendChild(btn);
-    });
-}
-
-/* ================= PROGRESS ENGINE ================= */
-
-function updateProgress(){
-
-    const key = getKey();
-
-    const done = localStorage.getItem(key);
-
-    if(done === "completed"){
-        document.getElementById("progress").style.width = "100%";
-    } else {
-        document.getElementById("progress").style.width = "20%";
-    }
-}
-
-function markComplete(){
-
-    const key = getKey();
-
-    if(localStorage.getItem(key) !== "completed"){
-        localStorage.setItem(key, "completed");
-    }
-
-    document.getElementById("progress").style.width = "100%";
-}
-
-/* ================= NAV ENGINE ================= */
-
-function nextLesson(){
-
-    if(lessonIndex < module.lessons.length - 1){
-        lessonIndex++;
-        redirect();
-    }
-}
-
-function prevLesson(){
-
-    if(lessonIndex > 0){
-        lessonIndex--;
-        redirect();
-    }
-}
-
-function redirect(){
-
-    const l = module.lessons[lessonIndex];
-
-    window.location.href =
-        `lesson.html?course=${courseId}&module=${moduleId}&lesson=${l.id}`;
-}
-
-/* ================= HELPERS ================= */
-
-function getKey(){
-    return `${courseId}-${moduleId}-${lessonId}`;
-}
-
 </script>
-
 </body>
 </html>
