@@ -1,121 +1,135 @@
 const courses = {
-  "html-css": {
-    id: "html-css",
-    title: "HTML & CSS Basics",
-    level: "Beginner",
-    premium: false,
-    description: "Learn how websites are structured and styled from scratch.",
+    "html-css": {
+        id: "html-css",
+        title: "HTML & CSS Basics",
+        level: "Beginner",
+        premium: false,
+        description: "Learn how websites are structured and styled from scratch.",
+        modules: [
+            {
+                id: "intro-html",
+                title: "Introduction to HTML",
+                lessons: [
+                    {
+                        id: "what-is-html",
+                        title: "What is HTML?",
+                        content: {
+                            text: "HTML is the structure of all web pages. It defines elements like headings, paragraphs, links, images.",
+                            code: "<h1>Hello World</h1>",
+                            video: "",
+                            resources: []
+                        },
+                        quiz: {
+                            question: "What does HTML stand for?",
+                            options: [
+                                "Hyper Text Markup Language",
+                                "Home Tool Markup Language",
+                                "Hyperlinks Text Mark Language"
+                            ],
+                            answer: "Hyper Text Markup Language"
+                        },
+                        completed: false
+                    }
+                ]
+            },
 
-    modules: [
-      {
-        id: "mod-1",
-        title: "Introduction to HTML",
-        lessons: generateLessons("html", "intro", 20)
-      },
-      {
-        id: "mod-2",
-        title: "HTML Elements",
-        lessons: generateLessons("html", "elements", 20)
-      },
-      {
-        id: "mod-3",
-        title: "CSS Basics",
-        lessons: generateLessons("css", "basics", 20)
-      }
-    ]
-  },
+            {
+                id: "css-basics",
+                title: "CSS Basics",
+                lessons: [
+                    {
+                        id: "what-is-css",
+                        title: "What is CSS?",
+                        content: {
+                            text: "CSS is used to style HTML elements.",
+                            code: "body { color: red; }",
+                            video: "",
+                            resources: []
+                        }
+                    }
+                ]
+            }
+        ]
+    },
 
-  "javascript": {
-    id: "javascript",
-    title: "JavaScript Fundamentals",
-    level: "Beginner",
-    premium: false,
-    description: "Learn logic, events, and interactive web development.",
+    "javascript": {
+        id: "javascript",
+        title: "JavaScript Fundamentals",
+        level: "Beginner",
+        premium: false,
+        description: "Learn programming logic and interactivity.",
+        modules: [
+            {
+                id: "js-intro",
+                title: "JS Basics",
+                lessons: [
+                    {
+                        id: "variables",
+                        title: "Variables",
+                        content: {
+                            text: "Variables store data values.",
+                            code: "let name = 'Millie';"
+                        },
+                        quiz: {
+                            question: "Which keyword declares a variable?",
+                            options: ["let", "car", "make"],
+                            answer: "let"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
 
-    modules: [
-      {
-        id: "mod-1",
-        title: "JavaScript Basics",
-        lessons: generateLessons("js", "basics", 20)
-      },
-      {
-        id: "mod-2",
-        title: "Functions & Logic",
-        lessons: generateLessons("js", "logic", 20)
-      }
-    ]
-  },
+    "fullstack": {
+        id: "fullstack",
+        title: "Full Stack Intro",
+        level: "Intermediate",
+        premium: true,
+        description: "Frontend + Backend fundamentals.",
+        modules: [
+            {
+                id: "frontend",
+                title: "Frontend",
+                lessons: [
+                    {
+                        id: "ui",
+                        title: "UI Basics",
+                        content: {
+                            text: "Frontend is what users see."
+                        }
+                    }
+                ]
+            }
+        ]
+    },
 
-  "fullstack": {
-    id: "fullstack",
-    title: "Full Stack Introduction",
-    level: "Intermediate",
-    premium: true,
-    description: "Frontend + backend systems.",
+    "responsive-design": {
+        id: "responsive-design",
+        title: "Responsive Design",
+        level: "Beginner",
+        premium: false,
+        description: "Mobile friendly layouts.",
+        modules: []
+    },
 
-    modules: [
-      {
-        id: "mod-1",
-        title: "Frontend Basics",
-        lessons: generateLessons("fullstack", "frontend", 20)
-      },
-      {
-        id: "mod-2",
-        title: "Backend Basics",
-        lessons: generateLessons("fullstack", "backend", 20)
-      }
-    ]
-  }
+    "website-development": {
+        id: "website-development",
+        title: "Website Development",
+        level: "Intermediate",
+        premium: false,
+        description: "Build and deploy websites.",
+        modules: []
+    },
+
+    "freelancing": {
+        id: "freelancing",
+        title: "Freelancing & Clients",
+        level: "Intermediate",
+        premium: false,
+        description: "Get clients and earn online.",
+        modules: []
+    }
 };
 
-/* ================= ENGINE GENERATOR ================= */
-
-function generateLessons(courseKey, moduleKey, count) {
-  const lessons = [];
-
-  for (let i = 1; i <= count; i++) {
-    lessons.push({
-      id: `${courseKey}-${moduleKey}-${i}`,
-      title: `Lesson ${i}`,
-      content: {
-        text: `This is Lesson ${i} of ${moduleKey}. (Auto-generated content system)`
-      },
-      video: null,
-      resources: [],
-      quiz: i % 3 === 0 ? [
-        {
-          question: "What did you learn in this lesson?",
-          options: ["Option A", "Option B", "Option C"],
-          answer: "Option A"
-        }
-      ] : null,
-      completed: false
-    });
-  }
-
-  return lessons;
-}
-
-/* ================= SAFETY LAYER ================= */
-
-function safeCourses(data) {
-  Object.keys(data).forEach(key => {
-    if (!data[key].modules) data[key].modules = [];
-
-    data[key].modules.forEach(mod => {
-      if (!mod.lessons) mod.lessons = [];
-
-      mod.lessons.forEach(lesson => {
-        if (!lesson.content) lesson.content = { text: "Content loading..." };
-      });
-    });
-  });
-
-  return data;
-}
-
-safeCourses(courses);
-
-if (typeof window !== "undefined") {
-  window.courses = courses;
-}
+window.courses = courses;
