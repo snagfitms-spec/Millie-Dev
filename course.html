@@ -1,31 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course | MillieDev</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        :root { --primary:#38BDF8; --accent:#A855F7; }
-        .course-header { padding:80px 5%; text-align:center; }
-        .course-header h1 { font-size:2.8rem; background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        .badge { display:inline-block; margin-top:10px; padding:6px 14px; border-radius:20px; background:rgba(56,189,248,0.1); color:var(--primary); font-size:0.85rem; }
-        .modules { max-width:900px; margin:auto; padding:20px 5%; }
-        .module { background:rgba(255,255,255,0.03); border-radius:16px; margin-bottom:15px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); }
-        .module-header { padding:15px 20px; display:flex; justify-content:space-between; cursor:pointer; }
-        .module-header:hover { background:rgba(255,255,255,0.05); }
-        .lessons { display:none; padding:10px 20px 20px; }
-        .module.active .lessons { display:block; }
-        .lesson { padding:10px; margin:6px 0; border-radius:10px; cursor:pointer; transition:0.2s; background:rgba(255,255,255,0.02); }
-        .lesson:hover { background:rgba(56,189,248,0.12); color:var(--primary); }
-        #loading { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#0b0f17; z-index:9999; }
-        .spinner { width:40px; height:40px; border:3px solid rgba(255,255,255,0.2); border-top:3px solid var(--primary); border-radius:50%; animation:spin 1s linear infinite; margin-bottom:15px; }
-        @keyframes spin { to { transform:rotate(360deg); } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course | MillieDev</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+:root {
+    --primary:#38BDF8;
+    --accent:#A855F7;
+    --card:rgba(255,255,255,0.04);
+    --border:rgba(255,255,255,0.08);
+}
+
+/* HEADER */
+.course-header {
+    padding:70px 5% 30px;
+    text-align:center;
+}
+
+.course-header h1 {
+    font-size:2.5rem;
+    background:linear-gradient(90deg,var(--primary),var(--accent));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.badge {
+    display:inline-block;
+    margin-top:10px;
+    padding:6px 14px;
+    border-radius:20px;
+    background:rgba(56,189,248,0.1);
+    color:var(--primary);
+    font-size:0.8rem;
+}
+
+/* PROGRESS */
+.progress-wrap {
+    max-width:700px;
+    margin:20px auto;
+}
+
+.progress-bar {
+    height:8px;
+    background:rgba(255,255,255,0.08);
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill {
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--primary),var(--accent));
+    transition:0.4s;
+}
+
+.progress-text {
+    margin-top:8px;
+    font-size:0.85rem;
+    opacity:0.7;
+}
+
+/* MODULES */
+.modules {
+    max-width:900px;
+    margin:auto;
+    padding:20px 5%;
+}
+
+/* MODULE CARD */
+.module {
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    margin-bottom:14px;
+    overflow:hidden;
+    transition:0.3s;
+}
+
+.module-header {
+    padding:16px 18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+}
+
+.module-header:hover {
+    background:rgba(255,255,255,0.05);
+}
+
+.module-title {
+    font-size:1.1rem;
+    font-weight:600;
+}
+
+.module-meta {
+    font-size:0.75rem;
+    opacity:0.6;
+}
+
+/* LESSONS */
+.lessons {
+    display:none;
+    padding:0 18px 16px;
+}
+
+.module.active .lessons {
+    display:block;
+}
+
+.lesson {
+    padding:10px 12px;
+    margin-top:6px;
+    border-radius:10px;
+    cursor:pointer;
+    background:rgba(255,255,255,0.02);
+    border:1px solid rgba(255,255,255,0.05);
+    transition:0.25s;
+}
+
+.lesson:hover {
+    background:rgba(56,189,248,0.12);
+    transform:translateX(5px);
+    color:var(--primary);
+}
+
+/* LOADING */
+#loading {
+    position:fixed;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    background:#0b0f17;
+    z-index:9999;
+}
+
+.spinner {
+    width:40px;
+    height:40px;
+    border:3px solid rgba(255,255,255,0.2);
+    border-top:3px solid var(--primary);
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform:rotate(360deg); }
+}
+
+/* ERROR STATE */
+.error {
+    text-align:center;
+    padding:40px;
+    opacity:0.7;
+}
+</style>
 </head>
+
 <body>
 
-<nav class="navbar"><div class="logo">MillieDev</div></nav>
+<nav class="navbar">
+    <div class="logo">MillieDev</div>
+</nav>
 
 <div id="loading">
     <div class="spinner"></div>
@@ -38,55 +180,127 @@
     <p id="desc" style="opacity:0.7;margin-top:10px;"></p>
 </section>
 
+<!-- PROGRESS SYSTEM READY -->
+<div class="progress-wrap">
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-text" id="progressText">0% Complete</div>
+</div>
+
 <section class="modules" id="modules"></section>
 
 <script src="coursesData.js"></script>
+
 <script>
-    const params = new URLSearchParams(window.location.search);
-    const courseId = params.get("id");
-    const course = (typeof courses !== "undefined" && courses[courseId]) ? courses[courseId] : null;
+const params = new URLSearchParams(window.location.search);
+const courseId = params.get("id");
 
-    window.addEventListener("load", () => {
-        setTimeout(() => {
-            const loading = document.getElementById("loading");
-            if(!course){
-                document.getElementById("title").innerText = "Course Not Found";
-                document.getElementById("desc").innerText = "Invalid course selection.";
-                loading.style.display = "none";
-                return;
-            }
-            document.getElementById("title").innerText = course.title;
-            document.getElementById("level").innerText = course.level;
-            document.getElementById("desc").innerText = course.description;
-            renderModules();
-            loading.style.opacity = "0";
-            setTimeout(() => { loading.style.display = "none"; }, 400);
-        }, 500);
-    });
+const course = courses?.[courseId] || null;
 
-    function renderModules(){
-        const modulesContainer = document.getElementById("modules");
-        modulesContainer.innerHTML = "";
-        course.modules.forEach(module => {
-            const wrapper = document.createElement("div");
-            wrapper.className = "module";
-            wrapper.innerHTML = `
-                <div class="module-header"><h3>${module.title}</h3><span>▼</span></div>
-                <div class="lessons">${module.lessons.map(lesson => `<div class="lesson" data-lesson="${lesson.id}">▶ ${lesson.title}</div>`).join("")}</div>
-            `;
-            wrapper.querySelector(".module-header").addEventListener("click", () => wrapper.classList.toggle("active"));
-            wrapper.querySelectorAll(".lesson").forEach(el => {
-                el.addEventListener("click", () => openLesson(module.id, el.dataset.lesson));
+/* INIT */
+window.addEventListener("load", () => {
+
+    setTimeout(() => {
+
+        document.getElementById("loading").style.display = "none";
+
+        if(!course){
+            document.getElementById("title").innerText = "Course Not Found";
+            document.getElementById("desc").innerText = "This course does not exist or ID is wrong.";
+            document.getElementById("modules").innerHTML =
+                `<div class="error">No course data found.</div>`;
+            return;
+        }
+
+        document.getElementById("title").innerText = course.title;
+        document.getElementById("level").innerText = course.level;
+        document.getElementById("desc").innerText = course.description;
+
+        renderModules();
+
+        updateProgress();
+
+    }, 500);
+});
+
+
+/* MODULE RENDER (PRO STRUCTURE) */
+function renderModules(){
+
+    const container = document.getElementById("modules");
+    container.innerHTML = "";
+
+    if(!course.modules || course.modules.length === 0){
+        container.innerHTML = `
+            <div class="error">
+                🚧 No modules added yet. Coming soon.
+            </div>`;
+        return;
+    }
+
+    course.modules.forEach(module => {
+
+        const lessons = module.lessons || [];
+
+        const moduleEl = document.createElement("div");
+        moduleEl.className = "module";
+
+        moduleEl.innerHTML = `
+            <div class="module-header">
+                <div>
+                    <div class="module-title">${module.title}</div>
+                    <div class="module-meta">${lessons.length} lessons</div>
+                </div>
+                <div>▼</div>
+            </div>
+
+            <div class="lessons">
+                ${lessons.map(l => `
+                    <div class="lesson" data-lesson="${l.id}">
+                        ▶ ${l.title}
+                    </div>
+                `).join("")}
+            </div>
+        `;
+
+        /* toggle */
+        moduleEl.querySelector(".module-header")
+            .addEventListener("click", () => {
+                moduleEl.classList.toggle("active");
             });
-            modulesContainer.appendChild(wrapper);
+
+        /* lesson click */
+        moduleEl.querySelectorAll(".lesson").forEach(el => {
+            el.addEventListener("click", () => {
+                openLesson(module.id, el.dataset.lesson);
+            });
         });
+
+        container.appendChild(moduleEl);
+    });
+}
+
+
+/* NAVIGATION */
+function openLesson(moduleId, lessonId){
+    window.location.href =
+    `lesson.html?course=${courseId}&module=${moduleId}&lesson=${lessonId}`;
+}
+
+
+/* PROGRESS SYSTEM (SAFE DEFAULT) */
+function updateProgress(){
+    let percent = 0;
+
+    if(course.progress){
+        percent = course.progress;
     }
 
-    function openLesson(moduleId, lessonId){
-        // Fixed: now uses "course" to match lesson.html
-        window.location.href = `lesson.html?course=${courseId}&module=${moduleId}&lesson=${lessonId}`;
-    }
+    document.getElementById("progressFill").style.width = percent + "%";
+    document.getElementById("progressText").innerText = percent + "% Complete";
+}
 </script>
+
 </body>
 </html>
-
