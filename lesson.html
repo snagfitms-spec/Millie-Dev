@@ -1,63 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesson | MillieDev</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson | MillieDev</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* ================= LEVEL 16 PRO LESSON ENGINE ================= */
+
+:root{
+    --primary:#38BDF8;
+    --accent:#A855F7;
+}
+
+.lesson-container{
+    max-width:900px;
+    margin:auto;
+    padding:80px 5%;
+}
+
+/* HEADER */
+.lesson-title{
+    font-size:2.4rem;
+    background:linear-gradient(90deg,var(--primary),var(--accent));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.lesson-meta{
+    opacity:0.6;
+    margin-bottom:15px;
+}
+
+/* PROGRESS */
+.progress-bar{
+    height:8px;
+    background:rgba(255,255,255,0.08);
+    border-radius:50px;
+    overflow:hidden;
+    margin-bottom:10px;
+}
+
+.progress-fill{
+    height:100%;
+    width:0%;
+    background:var(--primary);
+    transition:0.4s;
+}
+
+.progress-text{
+    font-size:0.85rem;
+    opacity:0.7;
+    margin-bottom:20px;
+}
+
+/* CONTENT BOX */
+.lesson-box{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:14px;
+    padding:25px;
+    line-height:1.7;
+}
+
+/* CODE BLOCK */
+.code-block{
+    background:#0f172a;
+    padding:15px;
+    border-radius:10px;
+    margin:15px 0;
+    overflow-x:auto;
+    border-left:3px solid var(--primary);
+    font-family:monospace;
+    color:#38bdf8;
+}
+
+/* VIDEO */
+.video-box iframe{
+    width:100%;
+    height:300px;
+    border-radius:12px;
+    margin:15px 0;
+}
+
+/* RESOURCES */
+.resources{
+    margin-top:15px;
+}
+.resources a{
+    display:block;
+    color:var(--primary);
+    margin:5px 0;
+    text-decoration:none;
+}
+
+/* QUIZ */
+.quiz-box{
+    margin-top:25px;
+    padding:20px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.03);
+}
+
+.quiz-option{
+    padding:10px;
+    margin:8px 0;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.1);
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.quiz-option:hover{
+    background:rgba(56,189,248,0.1);
+}
+
+.correct{
+    background:rgba(34,197,94,0.2);
+    border-color:#22C55E;
+}
+
+.wrong{
+    background:rgba(239,68,68,0.2);
+    border-color:#EF4444;
+}
+
+/* NAV */
+.lesson-nav{
+    display:flex;
+    gap:10px;
+    margin-top:30px;
+}
+
+.lesson-nav button{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:var(--primary);
+    cursor:pointer;
+    font-weight:600;
+}
+
+</style>
+
 </head>
+
 <body>
 
-<nav class="navbar"><div class="logo">MillieDev</div></nav>
+<nav class="navbar">
+    <div class="logo">MillieDev</div>
+</nav>
 
 <div class="lesson-container">
-    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+    <!-- PROGRESS -->
+    <div class="progress-bar">
+        <div class="progress-fill" id="progress"></div>
+    </div>
+    <div class="progress-text" id="progressText">0% Complete</div>
+
+    <!-- TITLE -->
     <h1 class="lesson-title" id="title">Loading...</h1>
     <div class="lesson-meta" id="meta"></div>
-    <div class="lesson-box" id="content">Loading content...</div>
-    
+
+    <!-- CONTENT -->
+    <div class="lesson-box" id="content"></div>
+
+    <!-- VIDEO -->
+    <div class="video-box" id="videoBox"></div>
+
+    <!-- RESOURCES -->
+    <div class="resources" id="resources"></div>
+
+    <!-- QUIZ -->
+    <div class="quiz-box" id="quizBox" style="display:none;">
+        <h3>Quiz</h3>
+        <div id="quiz"></div>
+    </div>
+
+    <!-- NAV -->
     <div class="lesson-nav">
         <button onclick="prevLesson()">Previous</button>
         <button onclick="nextLesson()">Next</button>
     </div>
+
 </div>
 
 <script src="coursesData.js"></script>
+
 <script>
-    const params = new URLSearchParams(window.location.search);
-    const courseId = params.get("course");
-    const lessonId = params.get("lesson");
 
-    window.onload = () => {
-        const course = window.courses?.[courseId];
-        if (!course) return showError("Course not found");
+const params = new URLSearchParams(window.location.search);
 
-        // Flatten all lessons into a single track
-        let allLessons = [];
-        course.modules.forEach(m => m.lessons.forEach(l => allLessons.push({...l, mId: m.id, mTitle: m.title})));
-        
-        const index = allLessons.findIndex(l => l.id === lessonId);
-        if (index === -1) return showError("Lesson not found");
+const courseId = params.get("course");
+const moduleId = params.get("module");
+const lessonId = params.get("lesson");
 
-        const lesson = allLessons[index];
+let course, module, lessonIndex;
 
-        // Render UI
-        document.getElementById("title").innerText = lesson.title;
-        document.getElementById("meta").innerText = `${course.title} → ${lesson.mTitle}`;
-        document.getElementById("content").innerHTML = lesson.content?.text || "No content.";
+/* INIT */
+window.onload = () => {
 
-        // Navigation Handlers
-        window.nextLesson = () => index < allLessons.length - 1 ? 
-            window.location.href = `lesson.html?course=${courseId}&lesson=${allLessons[index+1].id}` : alert("Done!");
-        
-        window.prevLesson = () => index > 0 ? 
-            window.location.href = `lesson.html?course=${courseId}&lesson=${allLessons[index-1].id}` : alert("Start of course.");
-    };
+    course = courses[courseId];
+    module = course.modules.find(m => m.id === moduleId);
 
-    function showError(msg) {
-        document.getElementById("title").innerText = "Error";
-        document.getElementById("content").innerHTML = `<p>${msg}</p><a href="index.html">Back Home</a>`;
+    lessonIndex = module.lessons.findIndex(l => l.id === lessonId);
+
+    loadLesson();
+    updateProgress();
+};
+
+/* LOAD LESSON */
+function loadLesson(){
+
+    const lesson = module.lessons[lessonIndex];
+
+    document.getElementById("title").innerText = lesson.title;
+    document.getElementById("meta").innerText =
+        `${course.title} → ${module.title}`;
+
+    /* TEXT */
+    document.getElementById("content").innerHTML =
+        lesson.content?.text || "";
+
+    /* VIDEO */
+    const videoBox = document.getElementById("videoBox");
+    videoBox.innerHTML = "";
+
+    if(lesson.content?.video){
+        videoBox.innerHTML = `
+            <iframe src="${lesson.content.video}" frameborder="0" allowfullscreen></iframe>
+        `;
     }
+
+    /* CODE */
+    if(lesson.content?.code){
+        document.getElementById("content").innerHTML += `
+            <div class="code-block">${lesson.content.code}</div>
+        `;
+    }
+
+    /* RESOURCES */
+    const res = document.getElementById("resources");
+    res.innerHTML = "";
+
+    if(lesson.content?.resources?.length){
+        res.innerHTML = "<h4>Resources</h4>" +
+        lesson.content.resources.map(r =>
+            `<a href="${r}" target="_blank">${r}</a>`
+        ).join("");
+    }
+
+    loadQuiz(lesson);
+}
+
+/* QUIZ */
+function loadQuiz(lesson){
+
+    const quizBox = document.getElementById("quizBox");
+    const quiz = document.getElementById("quiz");
+
+    quiz.innerHTML = "";
+
+    if(!lesson.quiz){
+        quizBox.style.display = "none";
+        return;
+    }
+
+    quizBox.style.display = "block";
+
+    const q = lesson.quiz;
+
+    const div = document.createElement("div");
+    div.innerText = q.question;
+
+    quiz.appendChild(div);
+
+    q.options.forEach(opt => {
+
+        const btn = document.createElement("div");
+        btn.className = "quiz-option";
+        btn.innerText = opt;
+
+        btn.onclick = () => {
+
+            if(opt === q.answer){
+                btn.classList.add("correct");
+                saveProgress(100);
+            } else {
+                btn.classList.add("wrong");
+            }
+        };
+
+        quiz.appendChild(btn);
+    });
+}
+
+/* PROGRESS SYSTEM */
+function updateProgress(){
+
+    const key = `${courseId}-${moduleId}-${lessonId}`;
+
+    let progress = localStorage.getItem("progress-" + key) || 0;
+
+    document.getElementById("progress").style.width = progress + "%";
+    document.getElementById("progressText").innerText =
+        progress + "% Complete";
+}
+
+function saveProgress(value){
+
+    const key = `${courseId}-${moduleId}-${lessonId}`;
+
+    localStorage.setItem("progress-" + key, value);
+
+    updateProgress();
+}
+
+/* NAVIGATION */
+function nextLesson(){
+
+    if(lessonIndex < module.lessons.length - 1){
+        lessonIndex++;
+        redirect();
+    }
+}
+
+function prevLesson(){
+
+    if(lessonIndex > 0){
+        lessonIndex--;
+        redirect();
+    }
+}
+
+function redirect(){
+
+    const l = module.lessons[lessonIndex];
+
+    window.location.href =
+        `lesson.html?course=${courseId}&module=${moduleId}&lesson=${l.id}`;
+}
+
 </script>
+
 </body>
 </html>
